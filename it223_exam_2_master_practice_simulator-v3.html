@@ -1,0 +1,2689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+<title>IT 223: Exam 2 Master Practice &amp; Simulator (Modules 5–8)</title>
+<style>
+:root {
+  --primary: #003366;
+  --primary-dark: #001a35;
+  --primary-light: #eaf2fb;
+  --accent: #1d4ed8;
+  --gold: #d97706;
+  --gold-light: #fef3c7;
+  --success: #15803d;
+  --success-bg: #dcfce7;
+  --success-border: #86efac;
+  --error: #b91c1c;
+  --error-bg: #fee2e2;
+  --error-border: #fca5a5;
+  --gray-50: #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e1;
+  --gray-500: #64748b;
+  --gray-600: #475569;
+  --gray-700: #334155;
+  --gray-900: #0f172a;
+  --radius: 10px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow: 0 4px 12px -1px rgba(0,0,0,0.12), 0 2px 4px -2px rgba(0,0,0,0.08);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  background-color: #f1f5f9;
+  color: var(--gray-900);
+  line-height: 1.5;
+  padding-bottom: 100px;
+}
+
+header {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 65%, #0f4c81 100%);
+  color: white;
+  padding: 26px 16px 20px;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.header-inner {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.school-tag {
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #93c5fd;
+  margin-bottom: 6px;
+}
+
+h1 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1.25;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  color: #dbeafe;
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.dashboard-container {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--gray-200);
+  box-shadow: var(--shadow-sm);
+  padding: 10px 16px;
+}
+
+.dashboard-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.mode-and-stats {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.mode-switch {
+  display: inline-flex;
+  background: var(--gray-100);
+  padding: 3px;
+  border-radius: 8px;
+  border: 1px solid var(--gray-300);
+}
+
+.mode-btn {
+  border: none;
+  background: transparent;
+  padding: 5px 11px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--gray-600);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.mode-btn.active {
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
+
+.mode-btn.exam-active {
+  background: #b91c1c;
+  color: white;
+}
+
+.stat-badge {
+  background: var(--gray-100);
+  padding: 5px 11px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--gray-700);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.stat-badge strong {
+  color: var(--primary);
+}
+
+.stat-badge.score-badge {
+  background: var(--primary-light);
+  color: var(--primary);
+  border: 1px solid #bfdbfe;
+}
+
+.progress-track {
+  width: 72px;
+  height: 7px;
+  background: var(--gray-200);
+  border-radius: 4px;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--success);
+  transition: width 0.3s ease;
+}
+
+.timer-box {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #9f1239;
+}
+
+.timer-box.show {
+  display: inline-flex;
+}
+
+.timer-display {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.95rem;
+  font-weight: 800;
+  min-width: 50px;
+  text-align: center;
+}
+
+.timer-btn {
+  background: white;
+  border: 1px solid #fda4af;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #9f1239;
+  cursor: pointer;
+}
+
+.timer-btn:hover {
+  background: #ffe4e6;
+}
+
+.timer-select {
+  border: 1px solid #fda4af;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  padding: 2px 4px;
+  background: white;
+  color: #9f1239;
+  font-weight: 700;
+}
+
+.dashboard-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+button.btn-action {
+  background: white;
+  border: 1px solid var(--gray-300);
+  padding: 6px 11px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--gray-700);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+button.btn-action:hover {
+  background: var(--gray-100);
+}
+
+button.btn-cheatsheet {
+  background: var(--gold-light);
+  border-color: #fcd34d;
+  color: #92400e;
+}
+
+button.btn-cheatsheet:hover {
+  background: #fde68a;
+}
+
+button.btn-submit-exam {
+  background: #15803d;
+  border-color: #166534;
+  color: white;
+  display: none;
+}
+
+button.btn-submit-exam.show {
+  display: inline-flex;
+}
+
+button.btn-submit-exam:hover {
+  background: #166534;
+}
+
+button.btn-reset {
+  color: var(--error);
+  border-color: #fca5a5;
+}
+
+button.btn-reset:hover {
+  background: var(--error-bg);
+}
+
+.section-nav-wrapper {
+  max-width: 960px;
+  margin: 12px auto 0;
+  padding: 0 16px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.section-nav-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.section-nav {
+  display: flex;
+  gap: 7px;
+  width: max-content;
+}
+
+.nav-tab {
+  background: white;
+  border: 1px solid var(--gray-300);
+  padding: 7px 13px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--gray-700);
+  cursor: pointer;
+  white-space: nowrap;
+  touch-action: manipulation;
+  transition: all 0.2s;
+}
+
+.nav-tab:hover, .nav-tab.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+main {
+  max-width: 960px;
+  margin: 14px auto;
+  padding: 0 16px;
+}
+
+.exam-results-banner {
+  display: none;
+  background: white;
+  border: 2px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.exam-results-banner.show {
+  display: block;
+}
+
+.exam-results-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--gray-200);
+  padding-bottom: 14px;
+  margin-bottom: 14px;
+}
+
+.exam-grade-big {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.topic-breakdown-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 10px;
+}
+
+.topic-stat-card {
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 0.82rem;
+}
+
+.topic-stat-card strong {
+  display: block;
+  color: var(--gray-900);
+  margin-bottom: 3px;
+}
+
+.section-block {
+  margin-bottom: 26px;
+}
+
+.section-title-bar {
+  background: var(--primary-light);
+  border-left: 4px solid var(--primary);
+  padding: 12px 16px;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  margin-bottom: 14px;
+}
+
+.section-title-bar h2 {
+  font-size: 1.05rem;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.section-title-bar p {
+  font-size: 0.82rem;
+  color: var(--gray-600);
+  margin-top: 2px;
+}
+
+.question-card {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+  margin-bottom: 14px;
+  padding: 16px 16px 14px;
+  transition: transform 0.15s ease;
+}
+
+.question-header {
+  font-size: 0.96rem;
+  font-weight: 600;
+  color: var(--gray-900);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.48;
+}
+
+.q-badge {
+  background: var(--primary);
+  color: white;
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.q-topic-tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  background: var(--gray-100);
+  color: var(--gray-600);
+  padding: 2px 7px;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.option-btn {
+  background: #ffffff;
+  border: 1.5px solid var(--gray-300);
+  border-radius: 8px;
+  padding: 11px 14px;
+  text-align: left;
+  font-size: 0.91rem;
+  color: var(--gray-900);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  line-height: 1.42;
+}
+
+.option-btn:hover {
+  background: var(--gray-50);
+  border-color: var(--accent);
+}
+
+.opt-key {
+  font-weight: 700;
+  color: var(--primary);
+  min-width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gray-100);
+  border-radius: 5px;
+  font-size: 0.82rem;
+  flex-shrink: 0;
+}
+
+.option-btn.selected-exam {
+  background-color: #eff6ff !important;
+  border-color: var(--accent) !important;
+  color: #1e3a8a !important;
+  font-weight: 600;
+}
+
+.option-btn.selected-exam .opt-key {
+  background: var(--accent);
+  color: white;
+}
+
+.option-btn.correct {
+  background-color: var(--success-bg) !important;
+  border-color: var(--success) !important;
+  color: #14532d !important;
+  font-weight: 600;
+}
+
+.option-btn.correct .opt-key {
+  background: var(--success);
+  color: white;
+}
+
+.option-btn.incorrect {
+  background-color: var(--error-bg) !important;
+  border-color: var(--error) !important;
+  color: #7f1d1d !important;
+  animation: shake 0.25s;
+}
+
+.option-btn.incorrect .opt-key {
+  background: var(--error);
+  color: white;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-4px); }
+  100% { transform: translateX(0); }
+}
+
+.feedback-box {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 0.87rem;
+  display: none;
+  line-height: 1.48;
+}
+
+.feedback-box.show {
+  display: block;
+}
+
+.feedback-box.correct-msg {
+  background: var(--success-bg);
+  border: 1px solid var(--success-border);
+  color: #14532d;
+}
+
+.feedback-box.incorrect-msg {
+  background: var(--error-bg);
+  border: 1px solid var(--error-border);
+  color: #7f1d1d;
+}
+
+.feedback-header {
+  font-weight: 700;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 500;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.modal-overlay.show {
+  display: flex;
+}
+
+.modal-card {
+  background: white;
+  border-radius: 12px;
+  max-width: 880px;
+  width: 100%;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.25);
+  overflow: hidden;
+}
+
+.modal-header {
+  background: var(--primary);
+  color: white;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-header h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.modal-close {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.modal-body {
+  padding: 20px;
+  overflow-y: auto;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.cs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.cs-card {
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-left: 4px solid var(--primary);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.cs-card h4 {
+  color: var(--primary);
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+}
+
+.cs-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 16px;
+  font-size: 0.82rem;
+}
+
+.cs-table th, .cs-table td {
+  border: 1px solid var(--gray-300);
+  padding: 6px 8px;
+  text-align: left;
+}
+
+.cs-table th {
+  background: var(--primary);
+  color: white;
+}
+
+footer {
+  text-align: center;
+  color: var(--gray-600);
+  font-size: 0.8rem;
+  padding: 24px 16px;
+  margin-top: 30px;
+}
+
+@media (max-width: 720px) {
+  h1 { font-size: 1.3rem; }
+  .dashboard-inner { flex-direction: column; align-items: stretch; }
+  .mode-and-stats { justify-content: space-between; }
+  .dashboard-actions { justify-content: flex-end; }
+  .question-card { padding: 14px 12px 12px; }
+  .option-btn { padding: 10px 12px; font-size: 0.87rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="school-tag">George Mason University &bull; IT 223 Information Security Fundamentals</div>
+    <h1>Exam 2 Master Practice &amp; Simulator (120 Questions)</h1>
+    <div class="subtitle">Comprehensive Coverage of Modules 5, 6, 7, and 8 (Cryptography, Access Control, Physical Security, Networking &amp; Firewalls)</div>
+  </div>
+</header>
+
+<div class="dashboard-container">
+  <div class="dashboard-inner">
+    <div class="mode-and-stats">
+      <div class="mode-switch">
+        <button type="button" class="mode-btn active" id="mode-practice-btn" onclick="setMode('practice')">&#x270D; Practice Mode</button>
+        <button type="button" class="mode-btn" id="mode-exam-btn" onclick="setMode('exam')">&#x23F1; Exam Mode (90m)</button>
+      </div>
+
+      <div class="timer-box" id="timer-box">
+        <span>&#x23F0;</span>
+        <span class="timer-display" id="timer-display">90:00</span>
+        <button type="button" class="timer-btn" id="timer-toggle-btn" onclick="toggleTimer()">Pause</button>
+        <select class="timer-select" id="timer-duration-select" onchange="changeTimerDuration(this.value)" title="Select Exam Duration">
+          <option value="60">60m</option>
+          <option value="90" selected>90m</option>
+          <option value="120">120m</option>
+        </select>
+      </div>
+
+      <div class="stat-badge score-badge" id="score-badge-wrap">
+        Score: <strong id="score-display">0 / 120</strong> (<span id="percent-display">0%</span>)
+      </div>
+      <div class="stat-badge">
+        Answered: <strong id="answered-display">0 / 120</strong>
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-actions">
+      <button type="button" class="btn-action btn-submit-exam" id="submit-exam-btn" onclick="submitExam()">&#x2714; Submit &amp; Grade Exam</button>
+      <button type="button" class="btn-action btn-cheatsheet" onclick="toggleCheatSheet(true)">&#x26A1; Exam 2 Cheat Sheet</button>
+      <button type="button" class="btn-action" id="study-mode-btn" onclick="toggleStudyMode()">&#x1F4D6; Study Mode</button>
+      <button type="button" class="btn-action btn-reset" onclick="resetExam()">&#x21bb; Reset</button>
+    </div>
+  </div>
+</div>
+
+<div class="section-nav-wrapper">
+  <nav class="section-nav">
+    <button type="button" class="nav-tab active" onclick="filterSection('all', this)">All (120 Qs)</button>
+    <button type="button" class="nav-tab" onclick="filterSection('mod5', this)">Module 5: Cryptography I (Q1–25)</button>
+    <button type="button" class="nav-tab" onclick="filterSection('mod6', this)">Module 6: Cryptography II (Q26–50)</button>
+    <button type="button" class="nav-tab" onclick="filterSection('mod7', this)">Module 7: Access &amp; Physical (Q51–75)</button>
+    <button type="button" class="nav-tab" onclick="filterSection('mod8', this)">Module 8: Networking &amp; Firewalls (Q76–100)</button>
+    <button type="button" class="nav-tab" onclick="filterSection('sample', this)">Prof's Sample Review (Q101–120)</button>
+  </nav>
+</div>
+
+<main>
+  <div class="exam-results-banner" id="exam-results-banner"></div>
+  <div id="quiz-container"></div>
+</main>
+
+<!-- Cheat Sheet Modal -->
+<div class="modal-overlay" id="cheatsheet-modal" onclick="if(event.target===this)toggleCheatSheet(false)">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3>&#x26A1; IT 223 Exam 2 Comprehensive Quick Reference Cheat Sheet</h3>
+      <button type="button" class="modal-close" onclick="toggleCheatSheet(false)">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="cs-grid">
+        <div class="cs-card">
+          <h4>1. Cryptography Fundamentals</h4>
+          <p>&bull; <strong>Symmetric:</strong> Same key for encryption/decryption; fast (e.g., AES, DES). Challenge: Secure key exchange.</p>
+          <p>&bull; <strong>Asymmetric:</strong> Public/Private key pair; slow (e.g., RSA, ECC). Challenge: Key authentication (PKI).</p>
+          <p>&bull; <strong>Hybrid System:</strong> Asymmetric for secure session key exchange; Symmetric for bulk data (e.g., TLS/HTTPS).</p>
+        </div>
+        <div class="cs-card">
+          <h4>2. Hashing, MACs &amp; Signatures</h4>
+          <p>&bull; <strong>Hash:</strong> One-way function, fixed output, integrity only.</p>
+          <p>&bull; <strong>MAC / HMAC:</strong> Message + Shared Key &rarr; Integrity &amp; Origin Authentication (No non-repudiation).</p>
+          <p>&bull; <strong>Digital Signature:</strong> Hash encrypted with Sender's Private Key &rarr; Integrity, Authentication, &amp; Non-Repudiation.</p>
+        </div>
+        <div class="cs-card">
+          <h4>3. Access Control &amp; Physical Security</h4>
+          <p>&bull; <strong>AAA:</strong> Authentication (Supplicant vs Verifier), Authorization (Least privilege), Auditing (Logs).</p>
+          <p>&bull; <strong>4 Ds of Physical Security:</strong> Deterrence &rarr; Denial &rarr; Detection &rarr; Delay.</p>
+          <p>&bull; <strong>Power &amp; Environment:</strong> UPS required; Temp 60–75°F, Humidity 40–60% (prevent static damage).</p>
+        </div>
+        <div class="cs-card">
+          <h4>4. Networking &amp; Firewalls</h4>
+          <p>&bull; <strong>Addressing:</strong> Switch = MAC (Layer 2); Router = IP (Layer 3); Port = Service; Socket = IP + Port.</p>
+          <p>&bull; <strong>Firewall Types:</strong> Stateless (static IP/port header filter), Stateful (tracks TCP 3-way handshake state), Deep Packet Inspection (inspects payload).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2026 IT 223 Information Security Fundamentals &bull; Comprehensive Exam 2 Master Practice &amp; Simulator (120 Questions)</p>
+  <p>Covering Modules 5, 6, 7, and 8 Study Guide Bullet Points and Slide Decks.</p>
+</footer>
+
+<script>
+const sectionMeta = [
+  { id: "mod5", title: "Module 5: Cryptography I", desc: "Questions 1–25 • Definitions, History (Scytale, Caesar), Symmetric vs. Asymmetric, Substitution & Transposition, Brute Force, Dictionary Attacks, Side-Channel Analysis, Quantum Computing & Social Engineering." },
+  { id: "mod6", title: "Module 6: Cryptography II", desc: "Questions 26–50 • Public Channels, MACs, HMACs, Hashing & Collisions, Digital Signatures, RSA Mechanics, Hybrid Systems (TLS), PKI & Certificates, EFS, and VPN Modes & Protocols." },
+  { id: "mod7", title: "Module 7: Access Control & Physical Security", desc: "Questions 51–75 • AAA, Authentication Factors, MFA Trade-offs, RBAC/MAC/DAC, Biometrics (FAR/FRR), Kerberos, Physical Security 4 Ds, EMSEC, Power Anomalies, Static, Fire Classes A-D, and Digital Forensics." },
+  { id: "mod8", title: "Module 8: Networking Overview, Network Attacks & Firewalls", desc: "Questions 76–100 • TCP/IP & OSI Models, MAC vs IP vs Socket, DNS/ARP, IPv4 Subnetting & RFC 1918 Private IPs, NAT, TCP Handshake, 9 DoS Attack Types, and Stateless/Stateful/DPI Firewalls." },
+  { id: "sample", title: "Professor's Sample Review Questions (Exact Exam Style)", desc: "Questions 101–120 • Exact multiple-choice questions from the IT 223 Exam 2 Sample Review form: OSI layer protocols, firewall aliases, EMP/TEMPEST, RFC 1918 classes, IPv4/IPv6 bit lengths, TCP/IP headers, and Windows 11 CLI commands." }
+];
+
+const examBank = [
+  // ================= MODULE 5 (Q1 - Q25) =================
+  {
+    num: 1, sec: "mod5", topic: "Module 5 • Origins & Definition",
+    q: "What are the etymological origins of the word 'cryptography', and what is the general definition of cryptography?",
+    options: [
+      { k: "A", t: "Derived from Latin 'crypt-'; means the study of database administration." },
+      { k: "B", t: "Derived from Greek 'kryptos' (hidden/secret) and 'graphy' (writing); means transforming meaningful plaintext into ciphertext." },
+      { k: "C", t: "Derived from ancient Egyptian hieroglyphs; means physical lock manufacturing." },
+      { k: "D", t: "Derived from Arabic 'sifr'; means network packet routing." }
+    ],
+    answer: "B",
+    explanation: "The root 'crypt' comes from the Greek 'kryptos' (hidden or secret) and '-graphy' (writing), defining cryptography as the transformation of meaningful data (plaintext) into hidden/concealed data (ciphertext)."
+  },
+  {
+    num: 2, sec: "mod5", topic: "Module 5 • Cryptanalysis & Cryptology",
+    q: "How are cryptanalysis and cryptology defined in relation to cryptography?",
+    options: [
+      { k: "A", t: "Cryptanalysis is the science of breaking cryptographic systems ('bad guys'), while cryptology encompasses both cryptography and cryptanalysis ('science of secure communications')." },
+      { k: "B", t: "Cryptanalysis is creating encryption keys, while cryptology is firewall configuration." },
+      { k: "C", t: "Cryptology is only used for symmetric ciphers." },
+      { k: "D", t: "Cryptanalysis and cryptography are identical terms." }
+    ],
+    answer: "A",
+    explanation: "Cryptanalysis is the science of defeating or breaking cryptographic systems, whereas cryptology is the overarching science of secure communications encompassing both cryptography and cryptanalysis."
+  },
+  {
+    num: 3, sec: "mod5", topic: "Module 5 • Plaintext & Ciphertext",
+    q: "What is plaintext and what is ciphertext?",
+    options: [
+      { k: "A", t: "Plaintext is unencrypted binary data; ciphertext is encrypted plaintext that has been hashed." },
+      { k: "B", t: "Plaintext is the original meaningful data (which today may not be plain or text), and ciphertext is the meaningless-looking output of encryption." },
+      { k: "C", t: "Ciphertext is plaintext sent over Wi-Fi." },
+      { k: "D", t: "Plaintext is an RSA public key." }
+    ],
+    answer: "B",
+    explanation: "Plaintext is the original input message (though historically called 'text', today it can be binary files, images, etc.), and ciphertext is the transformed output produced by encryption algorithms."
+  },
+  {
+    num: 4, sec: "mod5", topic: "Module 5 • Code vs. Cipher",
+    q: "How does a code differ from a cipher in information security?",
+    options: [
+      { k: "A", t: "Codes replace whole words, phrases, or ideas with substitute symbols/words (like a secret codebook), whereas ciphers operate at the individual character or bit level algorithmically." },
+      { k: "B", t: "Codes are asymmetric while ciphers are always symmetric." },
+      { k: "C", t: "Codes are unbreakable whereas ciphers can be broken." },
+      { k: "D", t: "There is no difference; code and cipher are synonyms." }
+    ],
+    answer: "A",
+    explanation: "A code replaces words or phrases with code-words or symbols (like a dictionary/codebook), whereas a cipher operates character-by-character or bit-by-bit using mathematical algorithms and keys."
+  },
+  {
+    num: 5, sec: "mod5", topic: "Module 5 • Encryption, Decryption & Key",
+    q: "What are encryption, decryption, and a key (cryptovariable)?",
+    options: [
+      { k: "A", t: "Encryption compresses files; decryption decompresses them using a password." },
+      { k: "B", t: "Encryption converts plaintext to ciphertext using an algorithm and key; decryption reverses it; a key is a sequence of random bits controlling the algorithm." },
+      { k: "C", t: "A key is a physical metal device used to open server room doors." },
+      { k: "D", t: "Encryption is used solely for digital signatures." }
+    ],
+    answer: "B",
+    explanation: "Encryption converts plaintext to ciphertext, decryption turns ciphertext back to plaintext, and a key (cryptovariable) is a sequence of random bits that customizes the encryption/decryption algorithm."
+  },
+  {
+    num: 6, sec: "mod5", topic: "Module 5 • Symmetric Cryptography",
+    q: "What is symmetric cryptography, why is it called 'symmetric', and what is its primary challenge?",
+    options: [
+      { k: "A", t: "It uses two different keys; challenge is key length." },
+      { k: "B", t: "It uses the same key for both encryption and decryption (equal and opposite operations); the primary challenge is securely sharing/exchanging the key over an untrusted channel." },
+      { k: "C", t: "It only encrypts numbers symmetrically." },
+      { k: "D", t: "It requires quantum computers." }
+    ],
+    answer: "B",
+    explanation: "Symmetric cryptography uses the exact same key for encryption and decryption. The core challenge is securely distributing this shared secret key to both communicating parties without interception."
+  },
+  {
+    num: 7, sec: "mod5", topic: "Module 5 • Asymmetric Cryptography",
+    q: "What is asymmetric cryptography, why is it called 'asymmetric', and what are its key components and challenge?",
+    options: [
+      { k: "A", t: "It uses a single shared key; challenge is speed." },
+      { k: "B", t: "It uses a mathematically related key pair (Public and Private keys) where what is encrypted by one can only be decrypted by the other; the primary challenge is authenticating the public key." },
+      { k: "C", t: "It is unencrypted data sent over public networks." },
+      { k: "D", t: "It is obsolete." }
+    ],
+    answer: "B",
+    explanation: "Asymmetric (public-key) cryptography uses two different, mathematically related keys (public for encryption/verification, private for decryption/signing). Its challenge is authenticating that a public key truly belongs to the claimed owner."
+  },
+  {
+    num: 8, sec: "mod5", topic: "Module 5 • Performance Comparison",
+    q: "Is there a significant performance difference between modern symmetric and asymmetric algorithms?",
+    options: [
+      { k: "A", t: "No, both operate at identical speeds." },
+      { k: "B", t: "Yes, symmetric algorithms use short keys and simple operations making them very fast for bulk data, whereas asymmetric algorithms use long keys and intensive math making them much slower." },
+      { k: "C", t: "Asymmetric algorithms are 100 times faster than symmetric algorithms." },
+      { k: "D", t: "Performance depends exclusively on monitor resolution." }
+    ],
+    answer: "B",
+    explanation: "Modern symmetric algorithms (like AES) are designed for speed on bulk data, while asymmetric algorithms (like RSA) involve heavy mathematical computations with large numbers, making them much slower."
+  },
+  {
+    num: 9, sec: "mod5", topic: "Module 5 • Hybrid Cryptosystems",
+    q: "How can asymmetric and symmetric algorithms be used together in a hybrid cryptosystem?",
+    options: [
+      { k: "A", t: "By encrypting data twice with DES." },
+      { k: "B", t: "By using asymmetric encryption to securely exchange a fast symmetric session key, then using the symmetric key for bulk data encryption." },
+      { k: "C", t: "By alternating characters between RSA and AES." },
+      { k: "D", t: "They cannot be combined." }
+    ],
+    answer: "B",
+    explanation: "Hybrid systems (like SSL/TLS) leverage asymmetric encryption solely to securely exchange a one-time symmetric session key, and then use the fast symmetric session key for all subsequent bulk data transfer."
+  },
+  {
+    num: 10, sec: "mod5", topic: "Module 5 • Substitution, Transposition & Product Ciphers",
+    q: "What are substitution, transposition, and product ciphers?",
+    options: [
+      { k: "A", t: "Substitution replaces characters with others; transposition rearranges character order without altering them; product ciphers combine both." },
+      { k: "B", t: "Substitution encrypts numbers; transposition encrypts text; product ciphers encrypt passwords." },
+      { k: "C", t: "Substitution is asymmetric; transposition is symmetric." },
+      { k: "D", t: "They are all historical terms with no modern relevance." }
+    ],
+    answer: "A",
+    explanation: "Substitution replaces data values with other values (e.g., Caesar cipher). Transposition rearranges the sequence/order of elements without changing the elements themselves (e.g., Scytale). Product ciphers combine both substitution and transposition in multiple rounds."
+  },
+  {
+    num: 11, sec: "mod5", topic: "Module 5 • Brute Force Attack",
+    q: "What is a brute force attack, and what determines how long it takes to succeed?",
+    options: [
+      { k: "A", t: "Trying every possible password combination; speed depends on dictionary words." },
+      { k: "B", t: "Systematically trying every possible key value until valid plaintext appears; time depends on keyspace size, processing speed, and luck." },
+      { k: "C", t: "Physically breaking into a server room." },
+      { k: "D", t: "Sending emails until the server crashes." }
+    ],
+    answer: "B",
+    explanation: "A brute force attack tests every possible key in the keyspace. The time required depends directly on keyspace size (2^key_length), test speed, and luck."
+  },
+  {
+    num: 12, sec: "mod5", topic: "Module 5 • Dictionary Attack",
+    q: "What is a dictionary attack, and why is it useful against password-based keys?",
+    options: [
+      { k: "A", t: "Translating ciphertext into foreign languages." },
+      { k: "B", t: "Testing common words, names, and dictionary terms instead of the entire keyspace, because users pick memorable words for passwords." },
+      { k: "C", t: "Looking up cryptographic algorithms in a textbook." },
+      { k: "D", t: "Cracking RSA private keys using prime numbers." }
+    ],
+    answer: "B",
+    explanation: "Because humans choose weak, memorable passwords (real words or common phrases), a dictionary attack tests a targeted list of likely words rather than every random key combination."
+  },
+  {
+    num: 13, sec: "mod5", topic: "Module 5 • Statistical Analysis",
+    q: "How might statistical (frequency) analysis be useful in cryptanalysis?",
+    options: [
+      { k: "A", t: "It measures CPU power consumption." },
+      { k: "B", t: "It analyzes non-random patterns in ciphertext (such as letter frequencies like 'E' appearing ~13% in English) to break substitution ciphers." },
+      { k: "C", t: "It counts the number of users on a network." },
+      { k: "D", t: "It computes RSA prime moduli." }
+    ],
+    answer: "B",
+    explanation: "Statistical analysis examines language patterns (like English letter frequencies) in ciphertext. In simple substitution ciphers, high-frequency ciphertext characters correspond to high-frequency plaintext letters like 'E'."
+  },
+  {
+    num: 14, sec: "mod5", topic: "Module 5 • Side-Channel Analysis",
+    q: "What is side-channel analysis in cryptography?",
+    options: [
+      { k: "A", t: "Attacking a server via a secondary backdoor network cable." },
+      { k: "B", t: "Measuring physical side-effects of encryption hardware, such as execution time, power consumption, or electromagnetic radiation, to deduce key bits." },
+      { k: "C", t: "Intercepting emails in transit." },
+      { k: "D", t: "Guessing user passwords through social engineering." }
+    ],
+    answer: "B",
+    explanation: "Side-channel analysis bypasses mathematical weaknesses by measuring physical characteristics of the cryptographic device while it runs—such as processing time, power draw, or sound/radiation emissions."
+  },
+  {
+    num: 15, sec: "mod5", topic: "Module 5 • Public Data Exploits",
+    q: "How might public data be useful in cryptanalysis?",
+    options: [
+      { k: "A", t: "Public data contains unencrypted passwords." },
+      { k: "B", t: "Analyzing public parameters (such as factoring the large public composite modulus n in RSA into its two constituent prime numbers p and q) can compromise security." },
+      { k: "C", t: "Public data reveals employee phone numbers." },
+      { k: "D", t: "It has no relevance to cryptography." }
+    ],
+    answer: "B",
+    explanation: "In RSA, the public key includes modulus n (p × q). If public data or weak random generation allows an attacker to factor n back into primes p and q, the entire private key can be derived."
+  },
+  {
+    num: 16, sec: "mod5", topic: "Module 5 • Quantum Computing Threat",
+    q: "If large-scale quantum computing becomes feasible, how might it affect current information security?",
+    options: [
+      { k: "A", t: "It will make symmetric encryption 10 times slower." },
+      { k: "B", t: "It could run algorithms like Shor's algorithm to efficiently solve prime factorization and discrete logarithms, rendering standard asymmetric cryptosystems (RSA, ECC, Diffie-Hellman) obsolete." },
+      { k: "C", t: "It will eliminate the need for passwords." },
+      { k: "D", t: "It has zero impact on cryptography." }
+    ],
+    answer: "B",
+    explanation: "Quantum computers utilize qubits and algorithms (like Shor's) that can solve prime factorization and discrete logarithms exponentially faster than classical computers, threatening RSA and ECC."
+  },
+  {
+    num: 17, sec: "mod5", topic: "Module 5 • Social Engineering",
+    q: "What is social engineering in the context of information security?",
+    options: [
+      { k: "A", t: "Configuring network routers using social media." },
+      { k: "B", t: "Psychological manipulation of people into performing actions or divulging confidential information (like passwords or keys)." },
+      { k: "C", t: "Designing secure office buildings." },
+      { k: "D", t: "Testing firewall throughput." }
+    ],
+    answer: "B",
+    explanation: "Social engineering exploits human psychology rather than technical software flaws, tricking authorized users into voluntarily handing over credentials, keys, or access."
+  },
+  {
+    num: 18, sec: "mod5", topic: "Module 19 History • Scytale & Caesar",
+    q: "Historically, what ancient device did the Spartans use for transposition, and what classic shift cipher is attributed to Julius Caesar?",
+    options: [
+      { k: "A", t: "Scytale (transposition wrap); Caesar cipher (substitution shift of 3 letters)." },
+      { k: "B", t: "Enigma machine; RSA." },
+      { k: "C", t: "Hieroglyphs; DES." },
+      { k: "D", t: "Abacus; XOR pad." }
+    ],
+    answer: "A",
+    explanation: "The Spartans used a Scytale (a baton wrapped with leather strip) for transposition, and Julius Caesar used a substitution cipher shifting letters by 3 positions."
+  },
+  {
+    num: 19, sec: "mod5", topic: "Module 5 • Keyspace Magnitude",
+    q: "Why does increasing key length exponentially increase resistance against brute force attacks?",
+    options: [
+      { k: "A", t: "Because keyspace size equals 2^(key length bits), doubling the key length squares the number of possible keys." },
+      { k: "B", t: "Longer keys take up more disk space." },
+      { k: "C", t: "Longer keys prevent side-channel power analysis." },
+      { k: "D", t: "It slows down legitimate decryption." }
+    ],
+    answer: "A",
+    explanation: "Keyspace is 2^k where k is the key length in bits. Moving from 128 bits to 256 bits doesn't double the keyspace—it squares it (2^256), making brute-force search physically impossible."
+  },
+  {
+    num: 20, sec: "mod5", topic: "Module 5 • XOR Bitwise Operation",
+    q: "Which Boolean bitwise operation is its own inverse, commonly used in symmetric ciphers and One-Time Pads?",
+    options: [
+      { k: "A", t: "AND" },
+      { k: "B", t: "OR" },
+      { k: "C", t: "XOR (Exclusive OR)" },
+      { k: "D", t: "NOT" }
+    ],
+    answer: "C",
+    explanation: "Bitwise XOR is its own inverse: if A XOR B = C, then C XOR B = A. Combining matching bits yields 0 and different bits yields 1."
+  },
+  {
+    num: 21, sec: "mod5", topic: "Module 5 • Kerckhoffs's Principle",
+    q: "What core cryptographic principle states that a cryptosystem should be secure even if everything about the system, except the key, is public knowledge?",
+    options: [
+      { k: "A", t: "Security through obscurity" },
+      { k: "B", t: "Kerckhoffs's Principle (Security relies entirely on key secrecy, not algorithm secrecy)" },
+      { k: "C", t: "The Principle of Least Privilege" },
+      { k: "D", t: "The Danvers Doctrine" }
+    ],
+    answer: "B",
+    explanation: "Kerckhoffs's Principle dictates that algorithm details can be public; security rests solely on the secrecy, length, and randomness of the key."
+  },
+  {
+    num: 22, sec: "mod5", topic: "Module 5 • Transposition Swap & Rotation",
+    q: "What is the inverse operation of a circular shift (rotation) transposition, and what is the inverse of swapping two halves of a data block?",
+    options: [
+      { k: "A", t: "Rotation inverse is shifting in the opposite direction; swap inverse is swapping them back (another swap)." },
+      { k: "B", t: "Substitution; Hashing." },
+      { k: "C", t: "XOR; Division." },
+      { k: "D", t: "There is no inverse for transposition." }
+    ],
+    answer: "A",
+    explanation: "Transposition operations are easily reversible by applying the exact opposite transposition (e.g., rotating left instead of right, or swapping the halves again)."
+  },
+  {
+    num: 23, sec: "mod5", topic: "Module 5 • Modern Symmetric Algorithms",
+    q: "Which modern block cipher became the official US Government standard in 2000, supporting 128, 192, and 256-bit keys?",
+    options: [
+      { k: "A", t: "DES" },
+      { k: "B", t: "3DES" },
+      { k: "C", t: "AES (Advanced Encryption Standard / Rijndael)" },
+      { k: "D", t: "RC4" }
+    ],
+    answer: "C",
+    explanation: "AES (Rijndael) was approved by NIST in 2000 as the current US Symmetric Encryption Standard, operating on 128-bit blocks with 128, 192, or 256-bit keys."
+  },
+  {
+    num: 24, sec: "mod5", topic: "Module 5 • Diffie-Hellman Breakthrough",
+    q: "What major cryptographic breakthrough was introduced by Whitfield Diffie, Martin Hellman, and Ralph Merkle in 1976?",
+    options: [
+      { k: "A", t: "The first digital signature algorithm." },
+      { k: "B", t: "Solving the key exchange problem over an insecure public channel without prior secret key sharing." },
+      { k: "C", t: "Inventing AES." },
+      { k: "D", t: "Creating RSA." }
+    ],
+    answer: "B",
+    explanation: "Diffie and Hellman (1976) introduced the first protocol allowing two parties to securely establish a shared secret symmetric key over an insecure public channel."
+  },
+  {
+    num: 25, sec: "mod5", topic: "Module 5 • ECC Advantage",
+    q: "What is the primary advantage of Elliptic Curve Cryptography (ECC) over traditional RSA?",
+    options: [
+      { k: "A", t: "ECC is easier to program in BASIC." },
+      { k: "B", t: "ECC provides equivalent security strength with vastly smaller keys (e.g., 256-bit ECC matches 3072-bit RSA), saving CPU and battery power for mobile devices." },
+      { k: "C", t: "ECC does not require keys." },
+      { k: "D", t: "ECC is immune to quantum computers." }
+    ],
+    answer: "B",
+    explanation: "ECC uses elliptic curves over finite fields, offering equivalent security to RSA with much smaller key sizes, reducing computational and power resource overhead."
+  },
+
+  // ================= MODULE 6 (Q26 - Q50) =================
+  {
+    num: 26, sec: "mod6", topic: "Module 6 • Public Channel Attacks",
+    q: "What is a public communications channel, and what three primary attacks are possible over it?",
+    options: [
+      { k: "A", t: "Any shared network (like the Internet); attacks include Eavesdropping (confidentiality), Tampering/Modification (integrity), and Masquerade/Spoofing (authentication)." },
+      { k: "B", t: "A private telephone line; attacks include power surges." },
+      { k: "C", t: "A local USB cable; attacks include buffer overflows." },
+      { k: "D", t: "A firewall DMZ; attacks include DoS." }
+    ],
+    answer: "A",
+    explanation: "A public channel is an untrusted medium (like the Internet). Potential attacks include eavesdropping (violating confidentiality), modification/tampering (violating integrity), and masquerade/spoofing (violating authentication)."
+  },
+  {
+    num: 27, sec: "mod6", topic: "Module 6 • Recipient Assurances",
+    q: "What two primary assurances does the recipient of a message want, and how is origin authentication enabled?",
+    options: [
+      { k: "A", t: "Speed and cost; enabled by fiber optics." },
+      { k: "B", t: "Assurance of the message's content integrity and assurance of the true sender's identity (origin authentication), enabled via cryptographic keys, MACs, or digital signatures." },
+      { k: "C", t: "File size and format; enabled by XML." },
+      { k: "D", t: "Encryption strength and key length." }
+    ],
+    answer: "B",
+    explanation: "A recipient needs assurance that the data was not altered (integrity) and certainty of who sent it (origin authentication), achieved using shared keys or asymmetric digital signatures."
+  },
+  {
+    num: 28, sec: "mod6", topic: "Module 6 • MAC Function Inputs & Output",
+    q: "What are the inputs and output of a Message Authentication Code (MAC) function, and what provides its pseudo-randomness?",
+    options: [
+      { k: "A", t: "Inputs: Plaintext and a Public Key; Output: Ciphertext." },
+      { k: "B", t: "Inputs: A message (arbitrary bits) and a shared symmetric key; Output: A fixed-size MAC tag; Pseudo-randomness comes from combining the message with the secret shared key." },
+      { k: "C", t: "Inputs: Two private keys; Output: A digital certificate." },
+      { k: "D", t: "Inputs: IP address and MAC address; Output: Port number." }
+    ],
+    answer: "B",
+    explanation: "A MAC function takes a message and a secret shared symmetric key as inputs, producing a fixed-size authentication tag. The secret shared key ensures pseudo-randomness and origin authentication."
+  },
+  {
+    num: 29, sec: "mod6", topic: "Module 6 • MAC Verification & Non-Repudiation Limitation",
+    q: "What does the recipient do when receiving a message and MAC, and why does a standard MAC NOT provide non-repudiation?",
+    options: [
+      { k: "A", t: "Recipient decrypts the MAC with public key; lacks non-repudiation because the key is secret." },
+      { k: "B", t: "Recipient recalculates the MAC using the received message and their copy of the shared key; if it matches, origin and integrity are verified. It lacks non-repudiation because the key is shared between two parties, so either party could have generated the MAC." },
+      { k: "C", t: "Recipient deletes the MAC; non-repudiation requires passwords." },
+      { k: "D", t: "Recipient forwards it to the CA." }
+    ],
+    answer: "B",
+    explanation: "The recipient re-computes the MAC locally. If identical, origin and integrity are verified. However, because both sender and receiver know the same shared key, neither can prove to a third party who created it (no non-repudiation)."
+  },
+  {
+    num: 30, sec: "mod6", topic: "Module 6 • Hash Functions & Collisions",
+    q: "What is a cryptographic hash function, and what is a 'collision'?",
+    options: [
+      { k: "A", t: "A two-way reversible encryption algorithm; collision is two keys matching." },
+      { k: "B", t: "A one-way mathematical function converting any input into a fixed-size digest (integrity only); a collision occurs when two different inputs produce the exact same hash output." },
+      { k: "C", t: "A protocol for routing IP packets; collision is packet loss." },
+      { k: "D", t: "A firewall rule conflict." }
+    ],
+    answer: "B",
+    explanation: "Hash functions take arbitrary input and produce a fixed-size message digest (one-way, providing integrity). A collision happens when two distinct files hash to the identical digest value."
+  },
+  {
+    num: 31, sec: "mod6", topic: "Module 6 • Birthday Attack",
+    q: "What is a Birthday Attack against a hash function, and why did it necessitate moving to SHA-256?",
+    options: [
+      { k: "A", t: "An attack that steals user passwords on their birthday." },
+      { k: "B", t: "An attack exploiting the Birthday Paradox to force hash collisions in far fewer attempts than brute force, forcing government use of SHA-256 for longer outputs." },
+      { k: "C", t: "A social engineering trick sent via birthday e-cards." },
+      { k: "D", t: "A physical break-in during office celebrations." }
+    ],
+    answer: "B",
+    explanation: "The Birthday Paradox dictates that collisions occur much faster than expected (~2^(n/2)). Older 128-bit (MD5) and 160-bit (SHA-1) hashes became vulnerable, prompting the shift to SHA-256."
+  },
+  {
+    num: 32, sec: "mod6", topic: "Module 6 • HMAC vs. Hash vs. MAC",
+    q: "What is an HMAC (Hashed Message Authentication Code)?",
+    options: [
+      { k: "A", t: "A digital certificate issued by Microsoft." },
+      { k: "B", t: "A modern MAC function that incorporates a cryptographic hash function combined with a secret shared key to provide integrity and origin authentication." },
+      { k: "C", t: "Hardware encryption for Ethernet MAC addresses." },
+      { k: "D", t: "An obsolete symmetric cipher." }
+    ],
+    answer: "B",
+    explanation: "HMACs modernize MACs by combining cryptographic hash functions (like SHA-256) with a secret shared key to verify both integrity and origin authentication."
+  },
+  {
+    num: 33, sec: "mod6", topic: "Module 6 • Digital Signature Mechanics",
+    q: "What is a digital signature, how is it generated, and what security services does it provide?",
+    options: [
+      { k: "A", t: "A scanned image of a handwritten signature attached to an email." },
+      { k: "B", t: "A document's message digest encrypted with the sender's private key; provides Integrity, Authentication of Origin, AND Non-Repudiation." },
+      { k: "C", t: "Symmetric encryption of a PDF file." },
+      { k: "D", t: "A password entered into a web form." }
+    ],
+    answer: "B",
+    explanation: "A digital signature is created by hashing a document and encrypting that hash with the sender's private key. Because only the sender holds their private key, it provides non-repudiation along with integrity and authentication."
+  },
+  {
+    num: 34, sec: "mod6", topic: "Module 6 • RSA Practice Problem Mechanics",
+    q: "In an RSA setup with primes p = 7, q = 11, public exponent e = 17, and message m = 8: what are n, z(n), the private key d, and the encrypted ciphertext c?",
+    options: [
+      { k: "A", t: "n = 77, z(n) = 60, d = 53, c = 57" },
+      { k: "B", t: "n = 33, z(n) = 20, d = 3, c = 14" },
+      { k: "C", t: "n = 77, z(n) = 70, d = 17, c = 8" },
+      { k: "D", t: "n = 18, z(n) = 60, d = 7, c = 22" }
+    ],
+    answer: "A",
+    explanation: "n = p × q = 7 × 11 = 77. z(n) = (p-1)(q-1) = 6 × 10 = 60. Private key d satisfies (e × d) mod 60 = 1 ⇒ (17 × 53) mod 60 = 901 mod 60 = 1, so d = 53. Ciphertext c = 8^17 mod 77 = 57."
+  },
+  {
+    num: 35, sec: "mod6", topic: "Module 6 • Hash Reversibility",
+    q: "Encryption is reversible by decryption. Is a cryptographic hash function reversible?",
+    options: [
+      { k: "A", t: "Yes, by using the private hash key." },
+      { k: "B", t: "No, hash functions are strictly one-way mathematical operations and cannot be reversed to recover the original input plaintext." },
+      { k: "C", t: "Yes, using rainbow tables for any input." },
+      { k: "D", t: "Only in quantum computers." }
+    ],
+    answer: "B",
+    explanation: "Hash functions are one-way cryptographic operations. They compress data into a fixed-size digest; mathematical loss of information prevents reversing a hash back to plaintext."
+  },
+  {
+    num: 36, sec: "mod6", topic: "Module 6 • Password Hashing & Rainbow Tables",
+    q: "Why is storing passwords as plaintext dangerous, what is a rainbow table, and how does 'salting' defeat it?",
+    options: [
+      { k: "A", t: "Plaintext can be read by hackers if DB is breached; rainbow table is a pre-computed list of plaintext-to-hash mappings; salting adds a random unique string per user before hashing, altering the hash output so pre-computed tables fail." },
+      { k: "B", t: "Rainbow tables encrypt passwords faster; salting adds flavor." },
+      { k: "C", t: "Plaintext passwords improve login speed." },
+      { k: "D", t: "Salting removes the need for hashing." }
+    ],
+    answer: "A",
+    explanation: "Rainbow tables are giant pre-computed databases of common words and their unsalted hashes. Salting appends a unique random string to each password before hashing, rendering pre-computed rainbow tables useless."
+  },
+  {
+    num: 37, sec: "mod6", topic: "Module 6 • MS-CHAP Challenge-Response",
+    q: "How does the Microsoft Challenge-Handshake Authentication Protocol (MS-CHAP) use a hash function and challenge value?",
+    options: [
+      { k: "A", t: "It transmits the user's password in plaintext across the wire." },
+      { k: "B", t: "The server sends a random challenge value; client appends password to challenge, hashes it, and returns the hash. Server does the same; if hashes match, login is accepted without transmitting the password over the network." },
+      { k: "C", t: "It uses asymmetric RSA encryption for every login keystroke." },
+      { k: "D", t: "It requires a smart card." }
+    ],
+    answer: "B",
+    explanation: "MS-CHAP prevents password sniffing by having the client hash a server-sent random challenge combined with the user's password, proving knowledge of the password without ever transmitting it."
+  },
+  {
+    num: 38, sec: "mod6", topic: "Module 6 • PKI Components & Roles",
+    q: "What is Public Key Infrastructure (PKI), and what are the roles of a Certificate Authority (CA) and Registration Authority (RA)?",
+    options: [
+      { k: "A", t: "PKI manages physical room keys; CA issues passwords; RA resets routers." },
+      { k: "B", t: "PKI is a framework for issuing and managing digital certificates; CA issues and digitally signs certificates; RA performs applicant identity-proofing and vetting." },
+      { k: "C", t: "PKI is a symmetric encryption standard; CA is a firewall." },
+      { k: "D", t: "RA issues IP addresses." }
+    ],
+    answer: "B",
+    explanation: "PKI binds identities to public keys via digital certificates. The RA performs identity-proofing/vetting, and the CA officially issues and signs the X.509 certificate."
+  },
+  {
+    num: 39, sec: "mod6", topic: "Module 6 • Certificate Revocation (CRL vs. OCSP)",
+    q: "How do Certificate Revocation Lists (CRL) and Online Certificate Status Protocol (OCSP) differ?",
+    options: [
+      { k: "A", t: "CRL is a periodic downloaded list of revoked certificates; OCSP provides real-time online status checking for a certificate." },
+      { k: "B", t: "OCSP is only used for expired certificates." },
+      { k: "C", t: "CRL is real-time; OCSP is weekly." },
+      { k: "D", t: "They are identical protocols." }
+    ],
+    answer: "A",
+    explanation: "CRL is a downloaded list of revoked (non-expired) certificates stored in a repository, whereas OCSP performs instant, real-time online queries to verify certificate validity."
+  },
+  {
+    num: 40, sec: "mod6", topic: "Module 6 • EFS (Encrypting File System)",
+    q: "What is the Windows Encrypting File System (EFS)?",
+    options: [
+      { k: "A", t: "A firewall utility." },
+      { k: "B", t: "A Windows feature that provides transparent file-level symmetric encryption on NTFS hard drives to protect stored data from unauthorized physical access." },
+      { k: "C", t: "A protocol for secure email attachments." },
+      { k: "D", t: "A BIOS password." }
+    ],
+    answer: "B",
+    explanation: "EFS is a built-in Windows OS feature that transparently encrypts files and folders on NTFS volumes using symmetric encryption keys protected by user private keys."
+  },
+  {
+    num: 41, sec: "mod6", topic: "Module 6 • Link vs. End-to-End Encryption",
+    q: "What is the difference between link encryption and end-to-end encryption?",
+    options: [
+      { k: "A", t: "Link encryption encrypts all data along each communication hop (including headers/routing); end-to-end encryption encrypts only the payload between source and destination endpoints, leaving routing headers unencrypted." },
+      { k: "B", t: "End-to-end encryption is only for Wi-Fi." },
+      { k: "C", t: "Link encryption uses RSA; end-to-end uses DES." },
+      { k: "D", t: "There is no difference." }
+    ],
+    answer: "A",
+    explanation: "Link encryption secures data hop-by-hop (decrypting at intermediate routers), encrypting headers. End-to-end encryption encrypts data payloads directly between sender and receiver, leaving headers unencrypted for routing."
+  },
+  {
+    num: 42, sec: "mod6", topic: "Module 6 • Email Standards (S/MIME vs. PGP)",
+    q: "How do S/MIME and PGP (Pretty Good Privacy) differ in securing emails?",
+    options: [
+      { k: "A", t: "S/MIME uses centralized PKI and X.509 certificates; PGP uses a decentralized 'Web of Trust' where users sign each other's public keys." },
+      { k: "B", t: "PGP is owned by Microsoft; S/MIME is freeware." },
+      { k: "C", t: "S/MIME only encrypts subject lines." },
+      { k: "D", t: "PGP does not support digital signatures." }
+    ],
+    answer: "A",
+    explanation: "S/MIME relies on organizational Certificate Authorities (PKI) for trust, whereas PGP (Phil Zimmermann, 1991) relies on a decentralized user-driven 'Web of Trust'."
+  },
+  {
+    num: 43, sec: "mod6", topic: "Module 6 • IPSec Suite (AH vs. ESP & Modes)",
+    q: "What are the two protocols of the IPSec suite, and what are Tunnel mode vs. Transport mode?",
+    options: [
+      { k: "A", t: "AH provides authentication/integrity; ESP provides encryption + integrity. Tunnel mode encrypts the entire original IP packet (gateway-to-gateway); Transport mode encrypts only the payload (host-to-host)." },
+      { k: "B", t: "AH provides encryption; ESP provides passwords. Transport mode encrypts entire packets." },
+      { k: "C", t: "IPSec only works on IPv4." },
+      { k: "D", t: "Tunnel mode is used for email." }
+    ],
+    answer: "A",
+    explanation: "IPSec includes AH (Authentication Header for integrity/auth) and ESP (Encapsulating Security Payload for encryption + integrity). Tunnel mode encapsulates and encrypts the entire IP packet (VPN gateways), while Transport mode encrypts only the data payload."
+  },
+  {
+    num: 44, sec: "mod6", topic: "Module 6 • VPN Reality & Limitations",
+    q: "Is a Virtual Private Network (VPN) end-to-end, and what happens after the traffic exits the VPN gateway?",
+    options: [
+      { k: "A", t: "Yes, VPNs provide secure end-to-end encryption all the way to the destination web server." },
+      { k: "B", t: "No, a VPN is NOT end-to-end; it encrypts traffic from the client to the VPN server tunnel exit point. After exiting the VPN gateway, traffic travels across the public internet unencrypted (unless HTTPS/TLS is used)." },
+      { k: "C", t: "VPNs anonymize traffic permanently." },
+      { k: "D", t: "VPNs eliminate the need for firewalls." }
+    ],
+    answer: "B",
+    explanation: "A VPN protects traffic between your device and the VPN server (tunnel). Once traffic leaves the VPN gateway to the final destination, it is unencrypted unless protected by application-layer security like HTTPS."
+  },
+  {
+    num: 45, sec: "mod6", topic: "Module 6 • Bob & Alice Key Application Rules",
+    q: "If Bob wants to send Alice a message ensuring strict CONFIDENTIALITY, which key does he use? If he wants to ensure AUTHENTICITY / NON-REPUDIATION, which key does he use?",
+    options: [
+      { k: "A", t: "Confidentiality: Alice's Public Key; Authenticity: Bob's Private Key." },
+      { k: "B", t: "Confidentiality: Bob's Private Key; Authenticity: Alice's Public Key." },
+      { k: "C", t: "Both use a shared symmetric key." },
+      { k: "D", t: "Confidentiality: Sender's Private Key." }
+    ],
+    answer: "A",
+    explanation: "To ensure confidentiality, encrypt with the recipient's public key (only Alice can unlock with her private key). To ensure authenticity/non-repudiation, sign/encrypt with the sender's private key (anyone can verify with Bob's public key)."
+  },
+  {
+    num: 46, sec: "mod6", topic: "Module 6 • SSL/TLS Hybrid Handshake",
+    q: "In an SSL/TLS handshake (hybrid cryptosystem), how do client and server establish secure communication?",
+    options: [
+      { k: "A", t: "They exchange passwords in plaintext." },
+      { k: "B", t: "The client receives the server's digital certificate, extracts its public key, generates symmetric session keys, encrypts them with the server's public key, and sends them to the server for fast bulk encryption." },
+      { k: "C", t: "They use DES keys exclusively." },
+      { k: "D", t: "The server encrypts its private key." }
+    ],
+    answer: "B",
+    explanation: "TLS uses asymmetric public-key cryptography for authenticating the server and securely exchanging symmetric session keys, which are then used for fast, efficient bulk data encryption."
+  },
+  {
+    num: 47, sec: "mod6", topic: "Module 6 • VPN Protocols Comparison",
+    q: "Which VPN protocol is an open-source, highly configurable, and secure solution capable of bypassing most firewalls?",
+    options: [
+      { k: "A", t: "PPTP (Point-to-Point Tunneling Protocol)" },
+      { k: "B", t: "OpenVPN" },
+      { k: "C", t: "SSTP (Microsoft proprietary)" },
+      { k: "D", t: "Telnet" }
+    ],
+    answer: "B",
+    explanation: "OpenVPN is open-source, highly configurable, highly secure, and adept at bypassing restrictive firewalls, unlike older protocols like PPTP which were compromised by the NSA."
+  },
+  {
+    num: 48, sec: "mod6", topic: "Module 6 • Prime Authentication Problem",
+    q: "What is the 'Prime Authentication Problem' in digital systems and PKI?",
+    options: [
+      { k: "A", t: "Finding prime numbers for RSA." },
+      { k: "B", t: "If an imposter successfully deceives the provisioning authority/RA through social engineering during initial enrollment, they obtain legitimate credentials, breaking all subsequent tech access controls." },
+      { k: "C", t: "Server CPU overload during login." },
+      { k: "D", t: "Forgetting passwords." }
+    ],
+    answer: "B",
+    explanation: "Technology cannot verify who is behind the keyboard if an imposter successfully enrolled by tricking the Registration Authority (social engineering). Strict vetting procedures are mandatory."
+  },
+  {
+    num: 49, sec: "mod6", topic: "Module 6 • Hashing Use Cases",
+    q: "Besides digital signatures and password verification, what is another primary operational use of cryptographic hashing in system administration?",
+    options: [
+      { k: "A", t: "Compressing video files." },
+      { k: "B", t: "Verifying file and system integrity (using file integrity checkers like Tripwire to detect if critical system files have been modified)." },
+      { k: "C", t: "Routing IP packets across routers." },
+      { k: "D", t: "Establishing VPN tunnels." }
+    ],
+    answer: "B",
+    explanation: "File integrity checkers (like Tripwire) compute and compare hashes of system files against known good baselines. Any unauthorized change alters the hash instantly."
+  },
+  {
+    num: 50, sec: "mod6", topic: "Module 6 • Digital Certificate Lifetime",
+    q: "What is the typical lifecycle / lifetime of an X.509 digital certificate issued by a Certificate Authority?",
+    options: [
+      { k: "A", t: "10 to 20 years" },
+      { k: "B", t: "6 months to 3 years" },
+      { k: "C", t: "24 hours" },
+      { k: "D", t: "Forever until the user deletes it." }
+    ],
+    answer: "B",
+    explanation: "Digital certificates have a limited lifespan (typically ranging from 6 months to 3 years) to ensure regular re-validation of identities and key rotation."
+  },
+
+  // ================= MODULE 7 (Q51 - Q75) =================
+  {
+    num: 51, sec: "mod7", topic: "Module 7 • AAA of Access Control",
+    q: "What are the three A's of Access Control, and what does each entail?",
+    options: [
+      { k: "A", t: "Architecture, Algorithm, Auditing." },
+      { k: "B", t: "Authentication (verifying supplicant's identity claim via verifier), Authorization (granting specific permissions based on least privilege), and Auditing (monitoring and reviewing post-activity logs)." },
+      { k: "C", t: "Application, Access, Automation." },
+      { k: "D", t: "Asymmetric, Algorithm, Account." }
+    ],
+    answer: "B",
+    explanation: "AAA stands for Authentication (proving who you are), Authorization (what you are allowed to access via least privilege), and Auditing (reviewing logs after the fact)."
+  },
+  {
+    num: 52, sec: "mod7", topic: "Module 7 • Four Authentication Factors",
+    q: "What are the four primary factors used to authenticate a claim of identity?",
+    options: [
+      { k: "A", t: "Name, Address, Phone, Email" },
+      { k: "B", t: "What you know, What you have, Who you are, What you do" },
+      { k: "C", t: "Public key, Private key, Session key, Hash" },
+      { k: "D", t: "Password, Token, Smart card, Fingerprint only" }
+    ],
+    answer: "B",
+    explanation: "The four authentication factors are: What you know (password/PIN), What you have (token/smart card), Who you are (biometrics), and What you do (behavioral traits like gait or keystroke rhythm)."
+  },
+  {
+    num: 53, sec: "mod7", topic: "Module 7 • Multi-Factor Authentication Trade-offs",
+    q: "How does Multi-Factor Authentication (MFA) impact False Positives and False Negatives?",
+    options: [
+      { k: "A", t: "Decreases False Positives (impostors get in less easily), but INCREASES False Negatives (legitimate users get locked out more often if they fail any factor)." },
+      { k: "B", t: "Increases both False Positives and False Negatives." },
+      { k: "C", t: "Eliminates all errors entirely." },
+      { k: "D", t: "Decreases False Negatives while increasing False Positives." }
+    ],
+    answer: "A",
+    explanation: "MFA decreases false positives (harder for hackers because they need multiple factors), but increases false negatives (good users get locked out more frequently if they forget a token or PIN)."
+  },
+  {
+    num: 54, sec: "mod7", topic: "Module 7 • Access Control Models (RBAC, MAC, DAC)",
+    q: "How do Mandatory Access Control (MAC), Discretionary Access Control (DAC), and Role-Based Access Control (RBAC) differ?",
+    options: [
+      { k: "A", t: "MAC is strict military classification; DAC lets resource owners decide access (e.g., Snowden); RBAC assigns permissions based on organizational job roles." },
+      { k: "B", t: "RBAC is used exclusively by the military; DAC is automated." },
+      { k: "C", t: "MAC stands for Media Access Control." },
+      { k: "D", t: "There are no differences." }
+    ],
+    answer: "A",
+    explanation: "MAC enforces strict government/military classification labels with no user variation. DAC allows data owners to manage permissions for others. RBAC assigns permissions based on job roles, reducing human error."
+  },
+  {
+    num: 55, sec: "mod7", topic: "Module 7 • Multilevel Security & NTK",
+    q: "What is Multilevel Security (MLS) and 'Need to Know' (NTK) access?",
+    options: [
+      { k: "A", t: "Having a Top Secret clearance means you can view all documents across the government." },
+      { k: "B", t: "Classified systems use strict multi-layer security. Even with TS/SCI clearance, individuals only get access to specific 'Need to Know' compartments necessary for their mission." },
+      { k: "C", t: "Access is granted based on seniority alone." },
+      { k: "D", t: "NTK is an encryption algorithm." }
+    ],
+    answer: "B",
+    explanation: "Even at the highest classification levels (TS/SCI), compartmentalized Need-to-Know (NTK) controls ensure personnel only see information directly relevant to their specific duties."
+  },
+  {
+    num: 56, sec: "mod7", topic: "Module 7 • Biometric Accuracy (FAR vs. FRR)",
+    q: "What is False Acceptance Rate (FAR) and False Rejection Rate (FRR), and how do tight vs. loose matching thresholds affect them?",
+    options: [
+      { k: "A", t: "FAR = wrong person accepted; FRR = right person rejected. Tight matching decreases FAR (fewer impostors) but increases FRR (rejecting legitimate users); loose matching increases FAR." },
+      { k: "B", t: "FAR and FRR are identical metrics." },
+      { k: "C", t: "Loose matching eliminates all errors." },
+      { k: "D", t: "Tight matching lets everyone in." }
+    ],
+    answer: "A",
+    explanation: "FAR is Type II error (accepting an imposter); FRR is Type I error (rejecting a legitimate user). Tight matching thresholds reduce false acceptances but increase false rejections; loose matching does the reverse."
+  },
+  {
+    num: 57, sec: "mod7", topic: "Module 7 • Biometric Methods & Gold Standard",
+    q: "Which biometric technology is considered the 'Gold Standard' for accuracy, and what is a major drawback of biometrics regarding compromise?",
+    options: [
+      { k: "A", t: "Fingerprint scanning; drawback is they can be guessed." },
+      { k: "B", t: "Iris Scanning is the gold standard (highly accurate, though expensive/slow). Major drawback: unlike passwords or smart cards, if biometric data is leaked, you cannot replace your eyes or fingerprints." },
+      { k: "C", t: "Voice recognition; drawback is cost." },
+      { k: "D", t: "Hand geometry; drawback is software bugs." }
+    ],
+    answer: "B",
+    explanation: "Iris scanning is the gold standard due to low error rates. The fundamental flaw of biometrics is that biometric traits are permanent and cannot be changed if compromised."
+  },
+  {
+    num: 58, sec: "mod7", topic: "Module 7 • Kerberos Architecture & 6-Step Flow",
+    q: "In Kerberos authentication, what are the Key Distribution Center (KDC), TGT, and Service Ticket?",
+    options: [
+      { k: "A", t: "KDC is a firewall; TGT is a password hash." },
+      { k: "B", t: "KDC manages private keys and contains Authentication/Ticket-Granting servers. TGT (Ticket-Granting Ticket) is like a concert wristband proving initial login; Service Ticket proves identity to a specific service." },
+      { k: "C", t: "Kerberos is an asymmetric encryption algorithm." },
+      { k: "D", t: "Tickets are used for VPN tunneling." }
+    ],
+    answer: "B",
+    explanation: "Kerberos uses a KDC. Clients authenticate to get a TGT (concert wristband), then present the TGT to request Service Tickets to access specific servers securely."
+  },
+  {
+    num: 59, sec: "mod7", topic: "Module 7 • Central Authentication (RADIUS & LDAP)",
+    q: "What are RADIUS and LDAP in central authentication and directory services?",
+    options: [
+      { k: "A", t: "RADIUS is a UDP-based AAA protocol for dial-in/network access; LDAP is a protocol used by servers (like Active Directory) to query hierarchical directory databases." },
+      { k: "B", t: "RADIUS is a firewall; LDAP is an email standard." },
+      { k: "C", t: "Both are symmetric ciphers." },
+      { k: "D", t: "RADIUS encrypts hard drives." }
+    ],
+    answer: "A",
+    explanation: "RADIUS provides centralized AAA (using UDP), while LDAP (Lightweight Directory Access Protocol) enables servers to query hierarchical directories like Microsoft Active Directory."
+  },
+  {
+    num: 60, sec: "mod7", topic: "Module 7 • Physical Security 4 Ds",
+    q: "What is the correct functional order of the 4 Ds in physical security implementation?",
+    options: [
+      { k: "A", t: "Detection, Delay, Denial, Deterrence" },
+      { k: "B", t: "Deterrence, Denial, Detection, Delay" },
+      { k: "C", t: "Denial, Detection, Deterrence, Delay" },
+      { k: "D", t: "Delay, Detection, Denial, Deterrence" }
+    ],
+    answer: "B",
+    explanation: "The 4 Ds of physical security must be implemented in order: Deter (discourage), Deny (prevent access), Detect (spot intrusions), and Delay (slow intruders until police arrive)."
+  },
+  {
+    num: 61, sec: "mod7", topic: "Module 7 • Server Rooms & Wiring Closets Requirements",
+    q: "What are key physical security requirements for server rooms and wiring closets?",
+    options: [
+      { k: "A", t: "Open access for all employees, store cardboard boxes freely." },
+      { k: "B", t: "Wiring closets need 1-hr fire rating, locked, no flammables/storage. Server rooms require strict access control, raised floors, adequate cooling, and gas fire suppression." },
+      { k: "C", t: "Server rooms must use wet-pipe sprinklers." },
+      { k: "D", t: "No monitoring required." }
+    ],
+    answer: "B",
+    explanation: "Wiring closets and server rooms must be strictly locked, temperature-controlled, free of flammable general storage (minimum 1-hour fire rating for closets), and protected by gas suppression."
+  },
+  {
+    num: 62, sec: "mod7", topic: "Module 7 • EMSEC & TEMPEST",
+    q: "What is EMSEC (Emanation Security), TEMPEST, and a Faraday Cage?",
+    options: [
+      { k: "A", t: "EMSEC protects against electrical signal leaks; TEMPEST protects against EMP/emanation eavesdropping; Faraday Cage is a metal-meshed room blocking electromagnetic signals." },
+      { k: "B", t: "EMSEC is email security; Faraday Cage is a physical jail cell." },
+      { k: "C", t: "TEMPEST is a weather monitoring protocol." },
+      { k: "D", t: "None of the above." }
+    ],
+    answer: "A",
+    explanation: "EMSEC prevents eavesdropping on electronic device signal emanations. TEMPEST and Faraday Cages (metal mesh/shielding) block electromagnetic radiation and EMPs."
+  },
+  {
+    num: 63, sec: "mod7", topic: "Module 7 • Power Anomalies (Fault, Sag, Surge, etc.)",
+    q: "How do a Fault, Sag, Brownout, Spike, and Surge differ in power utilities?",
+    options: [
+      { k: "A", t: "Fault = momentary power loss; Blackout = complete long loss; Sag = momentary low voltage; Brownout = prolonged low voltage; Spike = momentary high voltage; Surge = prolonged high voltage." },
+      { k: "B", t: "All terms mean complete power failure." },
+      { k: "C", t: "Brownouts only affect routers." },
+      { k: "D", t: "Surges are caused by static electricity." }
+    ],
+    answer: "A",
+    explanation: "Power anomalies are categorized by duration and voltage level (Fault/Blackout for loss; Sag/Brownout for low voltage; Spike/Surge for high voltage bursts)."
+  },
+  {
+    num: 64, sec: "mod7", topic: "Module 7 • Temperature, Humidity & Static",
+    q: "What are the recommended server room temperature and humidity ranges, and what is the danger of low humidity?",
+    options: [
+      { k: "A", t: "Temp 40–50°F; Humidity 80–90%; danger is rust." },
+      { k: "B", t: "Temp 60–75°F; Humidity 40–60%. Low humidity causes severe static electricity (>5kV discharges can destroy circuits and hard drive data)." },
+      { k: "C", t: "Temp 85°F; Humidity 10%." },
+      { k: "D", t: "Temperature and humidity do not matter." }
+    ],
+    answer: "B",
+    explanation: "Ideal server room temperature is 60–75°F and humidity is 40–60%. Low humidity creates static electricity hazards capable of destroying semiconductors and hard drive data at high voltages."
+  },
+  {
+    num: 65, sec: "mod7", topic: "Module 7 • Fire Extinguisher Classes (A, B, C, D)",
+    q: "What types of fires do Fire Extinguisher Classes A, B, C, and D cover, and which suppression agent is used for electrical (Class C) fires?",
+    options: [
+      { k: "A", t: "Class A = Wood/Paper (Water); Class B = Liquids (CO2/Soda acid); Class C = Electrical (CO2/Inert gas, NEVER water); Class D = Metals (Dry powder)." },
+      { k: "B", t: "Class A = Electrical; Class C = Wood." },
+      { k: "C", t: "Water is used for all fire classes." },
+      { k: "D", t: "Class D = Liquids." }
+    ],
+    answer: "A",
+    explanation: "Class A (common combustibles/water), Class B (liquids), Class C (electrical/CO2 to avoid short circuits), Class D (burning metals/dry powder)."
+  },
+  {
+    num: 66, sec: "mod7", topic: "Module 7 • Water Sprinkler Systems",
+    q: "What is the difference between Wet Pipe, Dry Pipe, and Deluge water suppression systems?",
+    options: [
+      { k: "A", t: "Wet pipe is always filled with water; Dry pipe is filled with compressed air until triggered; Deluge uses large open pipes for massive volume flooding." },
+      { k: "B", t: "Dry pipe uses liquid nitrogen." },
+      { k: "C", t: "Wet pipe is safer for servers." },
+      { k: "D", t: "They are identical." }
+    ],
+    answer: "A",
+    explanation: "Wet pipe systems hold water constantly. Dry pipe systems hold compressed air, filling with water only when heat triggers the valve. Deluge systems use large un-valved pipes for rapid total flooding."
+  },
+  {
+    num: 67, sec: "mod7", topic: "Module 7 • Perimeter Fencing Heights",
+    q: "What level of perimeter deterrence do different fence heights provide?",
+    options: [
+      { k: "A", t: "3–4 ft = deters casuals; 6–7 ft = deters most intruders; 8+ ft + 3 strands of barbed wire = deters all/determined intruders." },
+      { k: "B", t: "Any fence height stops all intruders." },
+      { k: "C", t: "Fences are purely decorative." },
+      { k: "D", t: "10 ft fences are illegal." }
+    ],
+    answer: "A",
+    explanation: "Standard physical security guidelines specify 3–4 ft for casual deterrence, 6–7 ft against most intruders, and 8+ ft with top barbed wire strands for serious perimeter defense."
+  },
+  {
+    num: 68, sec: "mod7", topic: "Module 7 • Motion Detectors & Alarms",
+    q: "What are the four types of motion detectors, and what are Deterrent, Repellant, and Notification alarms?",
+    options: [
+      { k: "A", t: "Infrared, Heat-based, Wave pattern, Passive audio. Notification alarms are silent alarms notifying authorities; Repellant use sirens; Deterrent engage locks/doors." },
+      { k: "B", t: "Motion detectors only use cameras." },
+      { k: "C", t: "Notification alarms flash house lights." },
+      { k: "D", t: "There are no silent alarms." }
+    ],
+    answer: "A",
+    explanation: "Motion detectors include infrared, heat, wave pattern, and audio. Alarm responses include deterrent (locking down doors), repellant (sirens/bells), and notification (silent alarms alerting security stations)."
+  },
+  {
+    num: 69, sec: "mod7", topic: "Module 7 • Equipment Failure & MTBF/MTTR",
+    q: "What do MTTF (Mean Time To Failure) and MTTR (Mean Time To Repair) measure in equipment reliability?",
+    options: [
+      { k: "A", t: "MTTF measures expected operating time before hardware failure; MTTR measures average time required to diagnose and repair/replace failed equipment." },
+      { k: "B", t: "MTTF is network bandwidth speed." },
+      { k: "C", t: "MTTR is software download time." },
+      { k: "D", t: "They measure battery voltage." }
+    ],
+    answer: "A",
+    explanation: "MTTF (Mean Time To Failure) tracks hardware longevity, while MTTR (Mean Time To Repair) tracks system restoration speed after a failure occurs."
+  },
+  {
+    num: 70, sec: "mod7", topic: "Module 7 • Digital Forensics Basics",
+    q: "What is digital forensics, and what is Locard's Principle of Exchange in forensics?",
+    options: [
+      { k: "A", t: "Recovering deleted browser history; Locard's principle states data cannot be deleted." },
+      { k: "B", t: "Digital forensics is the recovery and investigation of material found in digital devices. Locard's Principle states 'with cross transfer of evidence, every contact leaves a trace', applying digitally via file metadata, logs, and artifacts." },
+      { k: "C", t: "Forensics is only used for murder investigations." },
+      { k: "D", t: "Locard's principle requires write-blockers." }
+    ],
+    answer: "B",
+    explanation: "Digital forensics investigates digital evidence. Locard's Exchange Principle ('every contact leaves a trace') applies to digital systems through artifacts, logs, and metadata left behind during access."
+  },
+  {
+    num: 71, sec: "mod7", topic: "Module 7 • Three A's of Computer Forensics",
+    q: "What are the Three A's of the computer forensics methodology?",
+    options: [
+      { k: "A", t: "Acquire, Authenticate, Analyze" },
+      { k: "B", t: "Access, Authorize, Audit" },
+      { k: "C", t: "Archive, Automate, Assert" },
+      { k: "D", t: "Algorithm, Asymmetric, AES" }
+    ],
+    answer: "A",
+    explanation: "The 3 A's of computer forensics methodology are Acquire the evidence securely, Authenticate the integrity of the evidence, and Analyze the data."
+  },
+  {
+    num: 72, sec: "mod7", topic: "Module 7 • Forensics Tools & Terms",
+    q: "What is a write-blocker, volatile memory, file carving, and anti-forensic tools?",
+    options: [
+      { k: "A", t: "Write-blocker prevents accidental modification of evidence media; volatile memory is RAM lost on power-off; file carving extracts files from raw data streams without directory headers; anti-forensic tools attempt to hide or wipe evidence." },
+      { k: "B", t: "Write-blocker is a firewall rule; volatile memory is a hard drive." },
+      { k: "C", t: "File carving is deleting files permanently." },
+      { k: "D", t: "Anti-forensics is antivirus software." }
+    ],
+    answer: "A",
+    explanation: "Hardware/software write-blockers prevent modifying evidence during acquisition. Volatile memory (RAM) vanishes at power-down. File carving recovers deleted files by recognizing file headers/footers."
+  },
+  {
+    num: 73, sec: "mod7", topic: "Module 7 • Federated Identity Management",
+    q: "What is Federated Identity Management, and how does it differ from standard Identity Management?",
+    options: [
+      { k: "A", t: "Federated identity management allows users to use single sign-on (SSO) credentials across multiple distinct organizations/enterprises, whereas standard identity management is confined to a single corporate directory." },
+      { k: "B", t: "Federated management is only for government employees." },
+      { k: "C", t: "Standard identity management uses SAML 2.0 exclusively." },
+      { k: "D", t: "There is no difference." }
+    ],
+    answer: "A",
+    explanation: "Federated Identity Management extends single sign-on across organizational boundaries, allowing trusted cross-company authentication (e.g., using Google or institutional logins to access partner services)."
+  },
+  {
+    num: 74, sec: "mod7", topic: "Module 7 • Piggybacking & Mantraps",
+    q: "What is piggybacking (tailgating), and how does a mantrap prevent it?",
+    options: [
+      { k: "A", t: "Piggybacking is following someone through a secured door without badge scanning; a mantrap is a secure two-door interlocking chamber where the first door must close and lock before the second can open." },
+      { k: "B", t: "Piggybacking is a network routing attack; mantrap is a firewall." },
+      { k: "C", t: "Piggybacking is sharing passwords." },
+      { k: "D", t: "Mantraps are used for fire suppression." }
+    ],
+    answer: "A",
+    explanation: "Piggybacking is illegal tailgating into a secure area. Mantraps stop this by trapping unauthorized followers in a small vestibule between two interlocking doors."
+  },
+  {
+    num: 75, sec: "mod7", topic: "Module 7 • Electromagnetic Interference (Common Mode & Traverse)",
+    q: "How do Common Mode Noise and Traverse Mode Noise differ in electrical power wiring?",
+    options: [
+      { k: "A", t: "Common Mode is voltage difference between hot and ground wires; Traverse Mode is voltage difference between hot and neutral wires." },
+      { k: "B", t: "Common Mode is Wi-Fi interference; Traverse Mode is lightning." },
+      { k: "C", t: "They measure CPU temperature." },
+      { k: "D", t: "They are identical." }
+    ],
+    answer: "A",
+    explanation: "Common mode noise occurs between hot and ground conductors, while traverse (differential) mode noise occurs between hot and neutral conductors in power circuits."
+  },
+
+  // ================= MODULE 8 (Q76 - Q100) =================
+  {
+    num: 76, sec: "mod8", topic: "Module 8 • TCP/IP & OSI Models",
+    q: "How do the OSI Reference Model (7 layers) and the TCP/IP protocol suite correspond?",
+    options: [
+      { k: "A", t: "OSI has 7 layers (Application, Presentation, Session, Transport, Network, Data Link, Physical); TCP/IP maps these into 4 layers (Application, Transport, Internet, Link/Network Access)." },
+      { k: "B", t: "TCP/IP has 10 layers; OSI has 3 layers." },
+      { k: "C", t: "OSI is used exclusively for wireless networks." },
+      { k: "D", t: "They have no relationship." }
+    ],
+    answer: "A",
+    explanation: "The theoretical 7-layer OSI model corresponds closely to the practical 4-layer TCP/IP protocol suite stack, especially at the lower transport and packet networking layers."
+  },
+  {
+    num: 77, sec: "mod8", topic: "Module 8 • Network Addressing (MAC vs. IP vs. Socket)",
+    q: "What network devices/protocols use MAC addresses, IP addresses, and port numbers, and what is a 'socket'?",
+    options: [
+      { k: "A", t: "Switch = MAC (Layer 2); Router = IP (Layer 3); Port = Service/Application; Socket = Combination of IP address and Port number (e.g., 192.168.1.10:80)." },
+      { k: "B", t: "Router uses MAC addresses; Switch uses IP addresses." },
+      { k: "C", t: "Socket is a physical electrical outlet for servers." },
+      { k: "D", t: "Port numbers identify physical cables." }
+    ],
+    answer: "A",
+    explanation: "Switches route via Layer 2 MAC addresses, routers route via Layer 3 IP addresses, ports identify application services, and a socket joins an IP address with a port number."
+  },
+  {
+    num: 78, sec: "mod8", topic: "Module 8 • DNS & ARP Functions",
+    q: "What are the functions of the Domain Name System (DNS) and Address Resolution Protocol (ARP)?",
+    options: [
+      { k: "A", t: "DNS translates human-readable domain names into IP addresses; ARP resolves IP addresses to physical MAC addresses on a local network." },
+      { k: "B", t: "DNS encrypts emails; ARP routes VPN packets." },
+      { k: "C", t: "ARP translates domain names." },
+      { k: "D", t: "DNS is a firewall protocol." }
+    ],
+    answer: "A",
+    explanation: "DNS maps URLs (google.com) to numeric IP addresses. ARP maps Layer 3 IP addresses to Layer 2 MAC addresses within a local area network (LAN)."
+  },
+  {
+    num: 79, sec: "mod8", topic: "Module 7/8 • IPv4 Binary Conversion (00110011 & 54)",
+    q: "What is the decimal value of the 8-bit binary octet 00110011, and what is the 8-bit binary value for decimal 54?",
+    options: [
+      { k: "A", t: "Binary 00110011 = 51 (32 + 16 + 2 + 1); Decimal 54 = Binary 00110110 (32 + 16 + 4 + 2)." },
+      { k: "B", t: "Binary 00110011 = 103; Decimal 54 = 01010101" },
+      { k: "C", t: "Binary 00110011 = 33; Decimal 54 = 01101100" },
+      { k: "D", t: "Binary 00110011 = 54; Decimal 54 = 00110011" }
+    ],
+    answer: "A",
+    explanation: "Powers of 2: 128, 64, 32, 16, 8, 4, 2, 1. 00110011 = 32 + 16 + 2 + 1 = 51. Decimal 54 = 32 + 16 + 4 + 2 = 00110110."
+  },
+  {
+    num: 80, sec: "mod8", topic: "Module 8 • Classful IP Ranges & Subnets (/26)",
+    q: "What IP address range defines a Class B network, and how many usable host addresses are supported in a /26 subnet mask (255.255.255.192)?",
+    options: [
+      { k: "A", t: "Class B: 1.0.0.0 – 127.255.255.255; /26 subnet supports 254 hosts." },
+      { k: "B", t: "Class B: 128.0.0.0 – 191.255.255.255; /26 subnet (6 host bits) supports 2^6 − 2 = 62 usable host addresses per subnet." },
+      { k: "C", t: "Class B: 192.0.0.0 – 223.255.255.255; /26 supports 14 hosts." },
+      { k: "D", t: "Class B: 224.0.0.0+; /26 supports 1022 hosts." }
+    ],
+    answer: "B",
+    explanation: "Class B ranges from 128.0.0.0 to 191.255.255.255. A /26 mask leaves 32 − 26 = 6 host bits, yielding 2^6 − 2 = 62 usable hosts (excluding network ID and broadcast)."
+  },
+  {
+    num: 81, sec: "mod8", topic: "Module 8 • RFC 1918 Private IP Ranges",
+    q: "What are the three private IPv4 address ranges defined by RFC 1918?",
+    options: [
+      { k: "A", t: "10.0.0.0/8, 172.16.0.0/12, and 192.168.0.0/16" },
+      { k: "B", t: "127.0.0.0/8, 192.0.2.0/24, and 224.0.0.0/4" },
+      { k: "C", t: "1.1.1.1/32, 8.8.8.8/32, and 9.9.9.9/32" },
+      { k: "D", t: "192.168.1.1 to 192.168.100.100" }
+    ],
+    answer: "A",
+    explanation: "RFC 1918 reserves 10.0.0.0/8 (single Class A), 172.16.0.0/12 (16 Class B networks), and 192.168.0.0/16 (256 Class C networks) for private internal enterprise use."
+  },
+  {
+    num: 82, sec: "mod8", topic: "Module 8 • Network Address Translation (NAT & Hide Mode)",
+    q: "What is Network Address Translation (NAT) and 'Hide Mode' NAT?",
+    options: [
+      { k: "A", t: "Translates domain names to MAC addresses; Hide mode encrypts packets." },
+      { k: "B", t: "NAT maps private internal IP addresses/ports to a single public IP address provided by an ISP. 'Hide Mode' NAT obscures all internal private network structure from external attackers, who only see the router's public IP." },
+      { k: "C", t: "A protocol for assigning dynamic IP addresses via DHCP." },
+      { k: "D", t: "A routing table loop prevention algorithm." }
+    ],
+    answer: "B",
+    explanation: "NAT maps private IP sockets to a router's public IP using port translation. 'Hide Mode' NAT successfully conceals internal network architecture, protecting internal hosts from direct external probing."
+  },
+  {
+    num: 83, sec: "mod8", topic: "Module 8 • Common Network Ports & Protocols",
+    q: "Match the following common protocols to their standard port numbers: FTP, SSH, Telnet, DNS, HTTP, HTTPS.",
+    options: [
+      { k: "A", t: "FTP = 21, SSH = 22, Telnet = 23, DNS = 53, HTTP = 80, HTTPS = 443" },
+      { k: "B", t: "FTP = 80, SSH = 443, Telnet = 21, DNS = 80" },
+      { k: "C", t: "FTP = 53, SSH = 80, Telnet = 443, DNS = 23" },
+      { k: "D", t: "All protocols operate on port 80." }
+    ],
+    answer: "A",
+    explanation: "Standard TCP/UDP port assignments: FTP control = 21, SSH = 22, Telnet = 23, DNS = 53, HTTP = 80, HTTPS = 443."
+  },
+  {
+    num: 84, sec: "mod8", topic: "Module 8 • TCP 3-Way Handshake",
+    q: "How does a TCP connection establish communication via the three-way handshake and terminate via the four-way close?",
+    options: [
+      { k: "A", t: "Handshake: SYN → SYN-ACK → ACK. Close: FIN → ACK, FIN → ACK (or RST for abrupt reset)." },
+      { k: "B", t: "Handshake: ACK → ACK → ACK; Close: STOP → GO." },
+      { k: "C", t: "Handshake: PING → PONG; Close: BYE." },
+      { k: "D", t: "TCP does not use handshakes." }
+    ],
+    answer: "A",
+    explanation: "TCP establishes connections via SYN, SYN-ACK, ACK. Sessions close normally via a 4-way FIN-ACK exchange or terminate abruptly via a TCP RST packet."
+  },
+  {
+    num: 85, sec: "mod8", topic: "Module 8 • ARP Operation & Poisoning",
+    q: "How does standard ARP operate, and how does an ARP poisoning (spoofing) attack work?",
+    options: [
+      { k: "A", t: "ARP broadcasts to map IP to MAC. ARP poisoning sends false unsolicited ARP replies to update victim LAN host ARP tables, mapping an attacker's MAC to a gateway IP to enable MITM sniffing." },
+      { k: "B", t: "ARP translates domain names; poisoning deletes DNS caches." },
+      { k: "C", t: "ARP is an encrypted routing protocol." },
+      { k: "D", t: "ARP poisoning crashes web servers." }
+    ],
+    answer: "A",
+    explanation: "ARP resolves IP addresses to MAC addresses via broadcasts. Because ARP lacks authentication, attackers inject false ARP replies (poisoning) to redirect local network traffic and perform MITM attacks."
+  },
+  {
+    num: 86, sec: "mod8", topic: "Module 8 • DNS Cache Poisoning & HOSTS File",
+    q: "What is DNS cache poisoning and how can malware exploit local HOSTS files?",
+    options: [
+      { k: "A", t: "DNS poisoning inserts fake IP records into local DNS caches to redirect traffic; malware edits the local OS HOSTS file (%SystemRoot%\\System32\\drivers\\etc\\hosts) to secretly reroute domain lookups." },
+      { k: "B", t: "DNS poisoning steals router passwords; HOSTS file is a firewall rule." },
+      { k: "C", t: "Malware deletes DNS servers." },
+      { k: "D", t: "DNS poisoning is an encryption flaw." }
+    ],
+    answer: "A",
+    explanation: "DNS cache poisoning injects fraudulent IP mappings into DNS servers. Locally, malware can manipulate the OS HOSTS file to force fraudulent website redirections."
+  },
+  {
+    num: 87, sec: "mod8", topic: "Module 8 • Passive vs. Active Attacks",
+    q: "What is the difference between passive and active network attacks?",
+    options: [
+      { k: "A", t: "Passive attacks monitor/sniff traffic without altering it (violating confidentiality); active attacks modify data, spoof, replay, or disrupt services (violating integrity, authentication, or availability)." },
+      { k: "B", t: "Active attacks only occur at night; passive attacks occur during the day." },
+      { k: "C", t: "Passive attacks crash servers; active attacks steal passwords." },
+      { k: "D", t: "There is no difference." }
+    ],
+    answer: "A",
+    explanation: "Passive attacks (like packet sniffing) observe traffic without interference. Active attacks (masquerade, replay, modification, DoS) actively alter data or disrupt communications."
+  },
+  {
+    num: 88, sec: "mod8", topic: "Module 8 • Active Attack Types (Masquerade, Replay, Modification, DoS)",
+    q: "Match the following active attacks: Masquerade, Replay, Modification, DoS.",
+    options: [
+      { k: "A", t: "Masquerade = impersonating an authorized user; Replay = re-transmitting captured legitimate messages; Modification = altering message content (MITM); DoS = blocking service availability." },
+      { k: "B", t: "Masquerade = stealing hard drives; Replay = packet sniffing." },
+      { k: "C", t: "Modification = guessing passwords; DoS = encryption break." },
+      { k: "D", t: "They are all forms of steganography." }
+    ],
+    answer: "A",
+    explanation: "Masquerade attacks authentication, replay attacks data integrity via duplicate messages, modification alters content in transit, and DoS attacks availability."
+  },
+  {
+    num: 89, sec: "mod8", topic: "Module 8 • DoS Attack Types (Buffer Overflow, Land, Ping of Death)",
+    q: "Define Buffer Overflow, Land Attack, and Ping of Death DoS attacks.",
+    options: [
+      { k: "A", t: "Buffer Overflow = sending excessive data to overrun RAM buffers; Land Attack = sending a packet with identical source and destination IP addresses causing a loop/crash; Ping of Death = sending an ICMP packet exceeding 65,536 bytes." },
+      { k: "B", t: "Land Attack = physical damage to a router; Ping of Death = deleting system logs." },
+      { k: "C", t: "Buffer Overflow = cracking RSA keys." },
+      { k: "D", t: "They are all legitimate diagnostic tools." }
+    ],
+    answer: "A",
+    explanation: "Buffer overflows corrupt memory; Land attacks send packets with identical source/destination IPs to confuse TCP stacks; Ping of Death sends oversized ICMP packets (>65,536 bytes) to crash target OS."
+  },
+  {
+    num: 90, sec: "mod8", topic: "Module 8 • DoS Attack Types (Smurf, Reflection, SYN Flood)",
+    q: "Define Smurf Attack, Reflection Attack, and SYN Flood.",
+    options: [
+      { k: "A", t: "Smurf = multicast ICMP echo flood with forged victim source IP; Reflection = routing responses to victim's spoofed IP; SYN Flood = exhausting server ports with half-open TCP connections." },
+      { k: "B", t: "Smurf = email spam; SYN Flood = resetting SSH sessions." },
+      { k: "C", t: "Reflection = mirroring screens." },
+      { k: "D", t: "None of the above." }
+    ],
+    answer: "A",
+    explanation: "Smurf and reflection attacks weaponize broadcast/third-party responses using IP spoofing. SYN floods leave TCP connection requests half-open, exhausting server connection tables."
+  },
+  {
+    num: 91, sec: "mod8", topic: "Module 8 • DoS Attack Types (Teardrop, Xmas Tree, SLAAC)",
+    q: "Define Teardrop Attack, Xmas Tree Attack, and SLAAC Attack.",
+    options: [
+      { k: "A", t: "Teardrop = overlapping fragmented IP packets causing reassembly crashes; Xmas Tree = setting urgent, PUSH, and FIN flags to fingerprint OS; SLAAC = introducing a rogue IPv6 router for MITM." },
+      { k: "B", t: "Teardrop = deleting database tables; Xmas Tree = holiday phishing." },
+      { k: "C", t: "SLAAC = assigning static IP addresses." },
+      { k: "D", t: "They are VPN protocols." }
+    ],
+    answer: "A",
+    explanation: "Teardrop exploits overlapping IP fragment offsets; Xmas Tree attacks set multiple TCP header flags simultaneously for OS fingerprinting; SLAAC attacks exploit auto-configuration tunnels for MITM."
+  },
+  {
+    num: 92, sec: "mod8", topic: "Module 8 • DDoS Attack Mitigation Techniques",
+    q: "What four techniques are commonly used to mitigate DDoS attacks?",
+    options: [
+      { k: "A", t: "Blacklisting source IPs, Sinkholing traffic to honeypots, Handshake Validation (terminating unresponsive half-open connections), and Throttling traffic speed." },
+      { k: "B", t: "Rebooting the internet service provider." },
+      { k: "C", t: "Deleting all router logs." },
+      { k: "D", t: "Switching from TCP to UDP." }
+    ],
+    answer: "A",
+    explanation: "DDoS mitigations include blacklisting attacker IPs, sinkholing malicious traffic to honeypots, validating handshakes to drop half-open connections, and throttling suspicious traffic rates."
+  },
+  {
+    num: 93, sec: "mod8", topic: "Module 8 • Firewall Definitions & Policy Approaches",
+    q: "What is a network firewall, and what are the two basic approaches to firewall policy?",
+    options: [
+      { k: "A", t: "A firewall is a physical concrete wall around servers. Policies: (1) Allow all except explicitly disallowed; (2) Disallow all except explicitly allowed (better, follows least privilege)." },
+      { k: "B", t: "A firewall is a backup generator. Policies: Allow all always." },
+      { k: "C", t: "A firewall is a DNS server." },
+      { k: "D", t: "Allowing all traffic is always the most secure approach." }
+    ],
+    answer: "A",
+    explanation: "A network firewall controls data movement between networks. The superior policy approach is 'Disallow all, except as explicitly allowed', aligning with the Principle of Least Privilege."
+  },
+  {
+    num: 94, sec: "mod8", topic: "Module 8 • Firewall Single Point of Failure & Vulnerability",
+    q: "Why is a firewall considered a potential single point of failure and a high-value vulnerability target?",
+    options: [
+      { k: "A", t: "If a firewall crashes or is flooded beyond processing capacity, all traffic stops or is dropped. If attackers modify its configuration rules, they bypass security controls entirely." },
+      { k: "B", t: "Firewalls consume all server RAM." },
+      { k: "C", t: "Firewalls require manual key entry." },
+      { k: "D", t: "They operate at Layer 1." }
+    ],
+    answer: "A",
+    explanation: "Firewalls are single points of failure (blocking all traffic if down or overloaded) and critical security chokepoints whose configuration files must be audited regularly."
+  },
+  {
+    num: 95, sec: "mod8", topic: "Module 8 • Stateless vs. Stateful vs. Deep Packet Inspection Firewalls",
+    q: "How do Stateless, Stateful, and Deep Packet Inspection (DPI) firewalls differ?",
+    options: [
+      { k: "A", t: "Stateless examines individual packet headers in isolation; Stateful tracks TCP connection state (3-way handshake); DPI inspects innermost application payload data (e.g., scanning for malware or spam)." },
+      { k: "B", t: "Stateless is used for Wi-Fi; Stateful is for hard drives." },
+      { k: "C", t: "DPI only checks MAC addresses." },
+      { k: "D", t: "Stateless firewalls are slower than DPI." }
+    ],
+    answer: "A",
+    explanation: "Stateless filters packets statically by header fields in isolation. Stateful filters dynamically based on TCP connection state machine tracking. DPI inspects application-layer payloads for content (malware/spam)."
+  },
+  {
+    num: 96, sec: "mod8", topic: "Module 8 • Router Function & Routing Tables",
+    q: "What is the function of a router and its routing table?",
+    options: [
+      { k: "A", t: "A router operates at Layer 3 (Network/IP layer) connecting multiple networks, examining destination IP addresses and consulting routing tables to forward packets toward their destination." },
+      { k: "B", t: "A router assigns MAC addresses to local PCs." },
+      { k: "C", t: "A router filters email attachments." },
+      { k: "D", t: "A router acts as a biometric scanner." }
+    ],
+    answer: "A",
+    explanation: "Routers operate at Layer 3, interconnecting different networks. They examine IP packet headers and use routing tables to determine the optimal next-hop forwarding path."
+  },
+  {
+    num: 97, sec: "mod8", topic: "Module 8 • DMZ (Demilitarized Zone)",
+    q: "What is a network Demilitarized Zone (DMZ)?",
+    options: [
+      { k: "A", t: "A secure room for storing backup tapes." },
+      { k: "B", t: "A semi-protected subnet positioned between the internal corporate network and the public internet, hosting public-facing servers (web, mail) while shielding internal LAN assets." },
+      { k: "C", t: "An unencrypted wireless network." },
+      { k: "D", t: "A firewall rule blocking all traffic." }
+    ],
+    answer: "B",
+    explanation: "A DMZ isolates public-facing servers from the internal corporate network, providing a buffer zone so external attackers compromising a web server cannot directly access internal databases."
+  },
+  {
+    num: 98, sec: "mod8", topic: "Module 8 • Simple Network Management Protocol (SNMP)",
+    q: "What is Simple Network Management Protocol (SNMP), and what are its key message types?",
+    options: [
+      { k: "A", t: "A protocol for encrypting emails; messages include SEND and RECEIVE." },
+      { k: "B", t: "A network management protocol using a Manager and Managed Agents with a MIB database. Commands include GET (retrieve status), SET (modify configuration), and Trap (unsolicited alert)." },
+      { k: "C", t: "A protocol for assigning IP addresses." },
+      { k: "D", t: "A firewall log viewer." }
+    ],
+    answer: "B",
+    explanation: "SNMP enables central management of network devices using an agent/manager architecture, MIB databases, and GET/SET/Trap commands."
+  },
+  {
+    num: 99, sec: "mod8", topic: "Module 8 • Defense-in-Depth Strategy",
+    q: "What is a 'Defense-in-Depth' security strategy in enterprise networking?",
+    options: [
+      { k: "A", t: "Relying entirely on a single powerful firewall." },
+      { k: "B", t: "Deploying multiple layered security controls—from physical security and perimeter firewalls to host hardening, application authentication, and user security awareness training." },
+      { k: "C", t: "Storing all data in an encrypted cloud vault." },
+      { k: "D", t: "Using only biometric access control." }
+    ],
+    answer: "B",
+    explanation: "Defense-in-depth ensures that if one security layer fails, subsequent layers (physical, network, host, application, policy) continue to protect enterprise assets."
+  },
+  {
+    num: 100, sec: "mod8", topic: "Module 8 • Network Switch Span Port",
+    q: "What is a 'Span Port' (Port Mirroring) on a network switch?",
+    options: [
+      { k: "A", t: "A port used to connect backup generators." },
+      { k: "B", t: "A switch port configured to copy and mirror all network traffic passing through the switch to a monitoring device or intrusion detection system (IDS)." },
+      { k: "C", t: "A port that blocks all broadcast storms." },
+      { k: "D", t: "A wireless antenna port." }
+    ],
+    answer: "B",
+    explanation: "A Span Port (port mirroring) allows network administrators or IDS sensors to observe and analyze all traffic traversing a switch without disrupting normal packet flow."
+  },
+  // ================= PROFESSOR'S SAMPLE REVIEW QUESTIONS (Q101 - Q120) =================
+  {
+    num: 101, sec: "sample", topic: "Sample Review • OSI Network Layer Protocol",
+    q: "What protocol operates at the Network layer (Layer 3) of the OSI model?",
+    options: [
+      { k: "A", t: "UDP" },
+      { k: "B", t: "TCP" },
+      { k: "C", t: "Telnet" },
+      { k: "D", t: "IP" },
+      { k: "E", t: "ARP" }
+    ],
+    answer: "D",
+    explanation: "IP (Internet Protocol) operates at the Network layer (Layer 3) of the OSI model to route packets across networks."
+  },
+  {
+    num: 102, sec: "sample", topic: "Sample Review • OSI Data Link Layer Protocol",
+    q: "What protocol operates at the Data Link layer (Layer 2) of the OSI model (acting as the bridge between Layers 2 and 3)?",
+    options: [
+      { k: "A", t: "UDP" },
+      { k: "B", t: "TCP" },
+      { k: "C", t: "Telnet" },
+      { k: "D", t: "IP" },
+      { k: "E", t: "ARP" }
+    ],
+    answer: "E",
+    explanation: "ARP (Address Resolution Protocol) operates at the Data Link layer in the sample review key, resolving IP addresses to physical MAC addresses."
+  },
+  {
+    num: 103, sec: "sample", topic: "Sample Review • OSI Application Layer Protocol (Telnet)",
+    q: "What protocol operates at the Application layer (Layer 7) of the OSI model?",
+    options: [
+      { k: "A", t: "UDP" },
+      { k: "B", t: "TCP" },
+      { k: "C", t: "Telnet" },
+      { k: "D", t: "IP" },
+      { k: "E", t: "ARP" }
+    ],
+    answer: "C",
+    explanation: "Telnet is an Application layer protocol. (UDP and TCP are Transport layer; IP is Network layer; ARP is Data Link layer)."
+  },
+  {
+    num: 104, sec: "sample", topic: "Sample Review • OSI Application Layer Protocol (HTTPS)",
+    q: "HTTPS operates at the ________ layer of the OSI model.",
+    options: [
+      { k: "A", t: "Transport" },
+      { k: "B", t: "Application" },
+      { k: "C", t: "Presentation" },
+      { k: "D", t: "Session" },
+      { k: "E", t: "Data Link" }
+    ],
+    answer: "B",
+    explanation: "HTTP and HTTPS operate at the Application layer (Layer 7) of the OSI model."
+  },
+  {
+    num: 105, sec: "sample", topic: "Sample Review • OSI Session Layer Function",
+    q: "The ________ layer deals with establishment, management, and dissolution of network connection sessions—periods of time during which systems exchange data in a certain context.",
+    options: [
+      { k: "A", t: "Transport" },
+      { k: "B", t: "Application" },
+      { k: "C", t: "Presentation" },
+      { k: "D", t: "Session" },
+      { k: "E", t: "Data Link" }
+    ],
+    answer: "D",
+    explanation: "The Session layer (Layer 5) manages the establishment, maintenance, and termination (dissolution) of sessions between communicating systems."
+  },
+  {
+    num: 106, sec: "sample", topic: "Sample Review • OSI Model Creator",
+    q: "The Open Systems Interconnection (OSI) Reference Model was invented/defined by?",
+    options: [
+      { k: "A", t: "USA" },
+      { k: "B", t: "The International Organization for Standardization (ISO)" },
+      { k: "C", t: "Microsoft" },
+      { k: "D", t: "RFC 1818" },
+      { k: "E", t: "IEEE" }
+    ],
+    answer: "B",
+    explanation: "The OSI Reference Model was defined by the International Organization for Standardization (ISO)."
+  },
+  {
+    num: 107, sec: "sample", topic: "Sample Review • Stateful Firewall Alternate Name",
+    q: "Another name for a stateful packet filter firewall is:",
+    options: [
+      { k: "A", t: "stateless packet filter" },
+      { k: "B", t: "static packet filter" },
+      { k: "C", t: "dynamic packet filter" },
+      { k: "D", t: "IP classless packet filter" },
+      { k: "E", t: "IP classful packet filter" }
+    ],
+    answer: "C",
+    explanation: "A stateful packet filter is also known as a dynamic packet filter because its forward/drop rules change dynamically based on the state of a TCP connection."
+  },
+  {
+    num: 108, sec: "sample", topic: "Sample Review • Static Firewall Alternate Name",
+    q: "Another name for a static packet filter firewall is:",
+    options: [
+      { k: "A", t: "stateless packet filter" },
+      { k: "B", t: "static route packet filter" },
+      { k: "C", t: "dynamic packet filter" },
+      { k: "D", t: "IP classless packet filter" },
+      { k: "E", t: "IP classful packet filter" }
+    ],
+    answer: "A",
+    explanation: "A static packet filter is also called a stateless packet filter because each packet is examined in isolation using fixed rules."
+  },
+  {
+    num: 109, sec: "sample", topic: "Sample Review • EMP Protection (Slide Key)",
+    q: "According to the Module 7b slides and sample review key, which of the following systems is listed as 'Protects against Electromagnetic Pulse (EMP)'?",
+    options: [
+      { k: "A", t: "stateless packet filter" },
+      { k: "B", t: "Emanation Security" },
+      { k: "C", t: "TEMPEST" },
+      { k: "D", t: "Faraday Cage" },
+      { k: "E", t: "White Noise" }
+    ],
+    answer: "C",
+    explanation: "On the Module 7b EMSEC slide and sample review key, TEMPEST is defined directly as 'Protects against Electromagnetic Pulse (EMP)', while Faraday Cage is defined as 'Box, mobile room or building with metal skin'."
+  },
+  {
+    num: 110, sec: "sample", topic: "Sample Review • Momentary Power Loss",
+    q: "A momentary loss of power is called a ________.",
+    options: [
+      { k: "A", t: "Blackout" },
+      { k: "B", t: "Fault" },
+      { k: "C", t: "Spike" },
+      { k: "D", t: "Surge" }
+    ],
+    answer: "B",
+    explanation: "A Fault is a momentary loss of power (whereas a Blackout is a complete/prolonged loss of power)."
+  },
+  {
+    num: 111, sec: "sample", topic: "Sample Review • RFC 1918 Private IP Exception",
+    q: "The following are RFC 1918 private IP addresses EXCEPT:",
+    options: [
+      { k: "A", t: "10.0.0.0" },
+      { k: "B", t: "127.0.0.0" },
+      { k: "C", t: "172.16.0.0" },
+      { k: "D", t: "192.168.0.0" }
+    ],
+    answer: "B",
+    explanation: "127.0.0.0 (e.g., 127.0.0.1) is reserved for local loopback testing, not an RFC 1918 private network block. The three RFC 1918 blocks are 10.0.0.0, 172.16.0.0, and 192.168.0.0."
+  },
+  {
+    num: 112, sec: "sample", topic: "Sample Review • RFC 1918 Class A, B, and C",
+    q: "In RFC 1918 private IP allocation, which address represents the Class A range, the Class B range, and the Class C range respectively?",
+    options: [
+      { k: "A", t: "Class A: 10.0.0.0 | Class B: 172.16.0.0 | Class C: 192.168.0.0" },
+      { k: "B", t: "Class A: 192.168.0.0 | Class B: 172.16.0.0 | Class C: 10.0.0.0" },
+      { k: "C", t: "Class A: 127.0.0.0 | Class B: 10.0.0.0 | Class C: 172.16.0.0" },
+      { k: "D", t: "Class A: 172.16.0.0 | Class B: 10.0.0.0 | Class C: 192.168.0.0" }
+    ],
+    answer: "A",
+    explanation: "RFC 1918 defines 10.0.0.0 – 10.255.255.255 as Class A (1 network), 172.16.0.0 – 172.31.255.255 as Class B (16 contiguous networks), and 192.168.0.0 – 192.168.255.255 as Class C (256 networks)."
+  },
+  {
+    num: 113, sec: "sample", topic: "Sample Review • IPv4 vs. IPv6 Bit Length",
+    q: "An IPv4 address has ________ bits, whereas an IPv6 address has ________ bits.",
+    options: [
+      { k: "A", t: "IPv4 has 32 bits; IPv6 has 128 bits" },
+      { k: "B", t: "IPv4 has 128 bits; IPv6 has 32 bits" },
+      { k: "C", t: "IPv4 has 64 bits; IPv6 has 255 bits" },
+      { k: "D", t: "IPv4 has 32 bits; IPv6 has 192 bits" }
+    ],
+    answer: "A",
+    explanation: "IPv4 addresses are 32 bits long (4 octets of 8 bits), while IPv6 addresses are 128 bits long."
+  },
+  {
+    num: 114, sec: "sample", topic: "Sample Review • Total Number of IPv4 Addresses",
+    q: "Because an IPv4 address is 32 bits long (2^32), the total number of IPv4 addresses is approximately:",
+    options: [
+      { k: "A", t: "4.3 million" },
+      { k: "B", t: "44,000" },
+      { k: "C", t: "4.3 billion" },
+      { k: "D", t: "No one knows" },
+      { k: "E", t: "It depends on the ISP (Internet Service Provider)" }
+    ],
+    answer: "C",
+    explanation: "2^32 = 4,294,967,296, which is approximately 4.3 billion total IPv4 addresses."
+  },
+  {
+    num: 115, sec: "sample", topic: "Sample Review • TCP Header Fields",
+    q: "Important fields in the TCP header (segment) include the:",
+    options: [
+      { k: "A", t: "Source and Destination IP addresses." },
+      { k: "B", t: "Source and Destination Port Numbers." },
+      { k: "C", t: "Source and Destination MAC addresses." },
+      { k: "D", t: "IP Header source and destination addresses." },
+      { k: "E", t: "Data Link source addresses." }
+    ],
+    answer: "B",
+    explanation: "At the Transport layer, the TCP header contains the Source and Destination Port Numbers (whereas the IP header contains Source/Destination IP addresses and the Data Link frame header contains MAC addresses)."
+  },
+  {
+    num: 116, sec: "sample", topic: "Sample Review • IP Packet Header Fields",
+    q: "The following are fields in the IP packet header, EXCEPT:",
+    options: [
+      { k: "A", t: "Source address" },
+      { k: "B", t: "Destination address" },
+      { k: "C", t: "TTL (Time to Live)" },
+      { k: "D", t: "MAC address" },
+      { k: "E", t: "Version" }
+    ],
+    answer: "D",
+    explanation: "MAC addresses belong to the Layer 2 Data Link frame header, NOT the Layer 3 IP packet header (which contains Version, TTL, Source IP, and Destination IP)."
+  },
+  {
+    num: 117, sec: "sample", topic: "Sample Review • Wi-Fi Standard",
+    q: "Which of the following is the IEEE wireless LAN (Wi-Fi) standard?",
+    options: [
+      { k: "A", t: "IP" },
+      { k: "B", t: "UDP" },
+      { k: "C", t: "TCP" },
+      { k: "D", t: "IEEE 802.11" },
+      { k: "E", t: "ARP" }
+    ],
+    answer: "D",
+    explanation: "IEEE 802.11 is the standard for wireless local area networking (Wi-Fi) at the Link layer."
+  },
+  {
+    num: 118, sec: "sample", topic: "Sample Review • Windows 11 CLI IP Address Command",
+    q: "On a Windows 11 PC, what command at the CLI (Command Prompt) can you issue to display the IP address, subnet mask, and default gateway assigned to your PC?",
+    options: [
+      { k: "A", t: "arp -a" },
+      { k: "B", t: "ping" },
+      { k: "C", t: "nmap -sP" },
+      { k: "D", t: "show ip address" },
+      { k: "E", t: "ipconfig" }
+    ],
+    answer: "E",
+    explanation: "The 'ipconfig' command displays the current TCP/IP network configuration values on a Windows PC."
+  },
+  {
+    num: 119, sec: "sample", topic: "Sample Review • Windows 11 CLI ARP Cache Command",
+    q: "On a Windows 11 PC, what command at the CLI can you use to show the ARP table mapping of IP addresses to their corresponding physical MAC addresses?",
+    options: [
+      { k: "A", t: "arp -a" },
+      { k: "B", t: "ping" },
+      { k: "C", t: "nmap -sP" },
+      { k: "D", t: "ipconfig" },
+      { k: "E", t: "show ip address" }
+    ],
+    answer: "A",
+    explanation: "Running 'arp -a' in the Windows command line displays the current ARP cache table mapping IP addresses to MAC addresses."
+  },
+  {
+    num: 120, sec: "sample", topic: "Sample Review • Windows 11 TCP/IP Configuration",
+    q: "On a Windows 11 PC, which of the following is NOT part of your standard host TCP/IP configuration properties?",
+    options: [
+      { k: "A", t: "IP address" },
+      { k: "B", t: "Subnet mask" },
+      { k: "C", t: "Static route" },
+      { k: "D", t: "Default gateway" }
+    ],
+    answer: "C",
+    explanation: "A host's standard TCP/IP settings consist of an IP address, Subnet mask, Default gateway, and DNS server—not a 'Static route'."
+  }
+];
+
+const appState = {
+  currentVersion: 'v1', // Using single unified bank or v1 slot
+  mode: 'practice',
+  studyMode: false,
+  currentFilter: 'all',
+  timerSeconds: 90 * 60,
+  timerDurationMin: 90,
+  timerRunning: false,
+  timerInterval: null,
+  examSubmitted: false,
+  answers: {}
+};
+
+function initQuizState() {
+  appState.examSubmitted = false;
+  appState.answers = {};
+  examBank.forEach(q => {
+    appState.answers[q.num] = { answered: false, correct: false, selected: null };
+  });
+}
+
+initQuizState();
+
+function setMode(newMode) {
+  if (appState.mode === newMode) return;
+  appState.mode = newMode;
+  appState.studyMode = false;
+  updateStudyModeButton();
+
+  const pBtn = document.getElementById('mode-practice-btn');
+  const eBtn = document.getElementById('mode-exam-btn');
+  const timerBox = document.getElementById('timer-box');
+  const submitBtn = document.getElementById('submit-exam-btn');
+  const studyBtn = document.getElementById('study-mode-btn');
+
+  if (newMode === 'exam') {
+    pBtn.classList.remove('active');
+    eBtn.classList.add('active', 'exam-active');
+    timerBox.classList.add('show');
+    submitBtn.classList.add('show');
+    studyBtn.style.display = 'none';
+    initQuizState();
+    resetTimer(appState.timerDurationMin);
+    startTimer();
+  } else {
+    eBtn.classList.remove('active', 'exam-active');
+    pBtn.classList.add('active');
+    timerBox.classList.remove('show');
+    submitBtn.classList.remove('show');
+    studyBtn.style.display = 'inline-flex';
+    stopTimer();
+  }
+
+  renderQuiz();
+}
+
+function startTimer() {
+  if (appState.timerInterval) clearInterval(appState.timerInterval);
+  appState.timerRunning = true;
+  document.getElementById('timer-toggle-btn').textContent = 'Pause';
+  appState.timerInterval = setInterval(() => {
+    if (appState.timerSeconds > 0) {
+      appState.timerSeconds--;
+      updateTimerDisplay();
+    } else {
+      stopTimer();
+      if (appState.mode === 'exam' && !appState.examSubmitted) {
+        submitExam();
+      }
+    }
+  }, 1000);
+}
+
+function stopTimer() {
+  if (appState.timerInterval) clearInterval(appState.timerInterval);
+  appState.timerInterval = null;
+  appState.timerRunning = false;
+  const btn = document.getElementById('timer-toggle-btn');
+  if (btn) btn.textContent = 'Resume';
+}
+
+function toggleTimer() {
+  if (appState.timerRunning) {
+    stopTimer();
+  } else {
+    startTimer();
+  }
+}
+
+function changeTimerDuration(mins) {
+  appState.timerDurationMin = parseInt(mins, 10);
+  resetTimer(appState.timerDurationMin);
+  if (appState.mode === 'exam' && !appState.examSubmitted) {
+    startTimer();
+  }
+}
+
+function resetTimer(mins) {
+  stopTimer();
+  appState.timerSeconds = mins * 60;
+  updateTimerDisplay();
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(appState.timerSeconds / 60);
+  const s = appState.timerSeconds % 60;
+  const el = document.getElementById('timer-display');
+  if (el) {
+    el.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  }
+}
+
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  const banner = document.getElementById('exam-results-banner');
+  container.innerHTML = '';
+
+  if (appState.mode === 'exam' && appState.examSubmitted) {
+    renderExamResultsBanner();
+  } else {
+    banner.className = 'exam-results-banner';
+    banner.innerHTML = '';
+  }
+
+  sectionMeta.forEach(sec => {
+    const secQs = examBank.filter(q => q.sec === sec.id);
+    const secBlock = document.createElement('div');
+    secBlock.className = 'section-block';
+    secBlock.id = `block-${sec.id}`;
+    secBlock.dataset.section = sec.id;
+
+    if (appState.currentFilter !== 'all' && appState.currentFilter !== sec.id) {
+      secBlock.style.display = 'none';
+    }
+
+    let secHTML = `
+      <div class="section-title-bar">
+        <h2>${sec.title}</h2>
+        <p>${sec.desc}</p>
+      </div>
+    `;
+
+    secQs.forEach(q => {
+      const qAns = appState.answers[q.num];
+      const formattedQ = q.q.replace(/\n/g, '<br>');
+
+      secHTML += `
+        <div class="question-card" id="q-card-${q.num}">
+          <div class="q-topic-tag">${q.topic}</div>
+          <div class="question-header">
+            <span class="q-badge">Q${q.num}</span>
+            <span>${formattedQ}</span>
+          </div>
+          <div class="options-list">
+            ${q.options.map(opt => {
+              let btnClass = 'option-btn';
+              if (qAns.answered) {
+                if (appState.mode === 'exam' && !appState.examSubmitted) {
+                  if (qAns.selected === opt.k) btnClass += ' selected-exam';
+                } else {
+                  if (opt.k === q.answer && (qAns.correct || appState.examSubmitted || appState.studyMode)) {
+                    btnClass += ' correct';
+                  } else if (qAns.selected === opt.k && !qAns.correct) {
+                    btnClass += ' incorrect';
+                  }
+                }
+              }
+              return `
+                <button type="button" class="${btnClass}" id="opt-${q.num}-${opt.k}" onclick="handleSelect(${q.num}, '${opt.k}')">
+                  <span class="opt-key">${opt.k}</span>
+                  <span>${opt.t}</span>
+                </button>
+              `;
+            }).join('')}
+          </div>
+          <div class="feedback-box ${getFeedbackClass(q, qAns)}" id="fb-${q.num}">
+            ${getFeedbackHTML(q, qAns)}
+          </div>
+        </div>
+      `;
+    });
+
+    secBlock.innerHTML = secHTML;
+    container.appendChild(secBlock);
+  });
+
+  updateDashboard();
+}
+
+function getFeedbackClass(q, qAns) {
+  if (appState.mode === 'exam' && !appState.examSubmitted) return '';
+  if (!qAns.answered && !appState.examSubmitted) return '';
+  if (qAns.correct) return 'show correct-msg';
+  return 'show incorrect-msg';
+}
+
+function getFeedbackHTML(q, qAns) {
+  if (appState.mode === 'exam' && !appState.examSubmitted) return '';
+  if (!qAns.answered && !appState.examSubmitted) return '';
+
+  if (qAns.correct) {
+    return `
+      <div class="feedback-header">&#x2714; Correct! (Answer: ${q.answer})</div>
+      <div>${q.explanation}</div>
+    `;
+  } else {
+    if (appState.examSubmitted) {
+      const userSel = qAns.selected ? `You selected <strong>${qAns.selected}</strong>.` : `<strong>Unanswered.</strong>`;
+      return `
+        <div class="feedback-header">&#x2718; Incorrect. ${userSel} Correct Answer: ${q.answer}</div>
+        <div>${q.explanation}</div>
+      `;
+    } else {
+      return `
+        <div class="feedback-header">&#x2718; Not quite!</div>
+        <div>You selected <strong>${qAns.selected}</strong>. Review the concept or tap another option to try again!</div>
+      `;
+    }
+  }
+}
+
+function handleSelect(qNum, selectedKey) {
+  const q = examBank.find(item => item.num === qNum);
+  if (!q) return;
+
+  if (appState.mode === 'exam' && appState.examSubmitted) return;
+
+  const isCorrect = (selectedKey === q.answer);
+  appState.answers[qNum] = {
+    answered: true,
+    correct: isCorrect,
+    selected: selectedKey
+  };
+
+  if (appState.mode === 'exam') {
+    q.options.forEach(opt => {
+      const btn = document.getElementById(`opt-${qNum}-${opt.k}`);
+      if (btn) btn.classList.toggle('selected-exam', opt.k === selectedKey);
+    });
+  } else {
+    q.options.forEach(opt => {
+      const btn = document.getElementById(`opt-${qNum}-${opt.k}`);
+      if (btn) btn.classList.remove('correct', 'incorrect', 'selected-exam');
+    });
+
+    const chosenBtn = document.getElementById(`opt-${qNum}-${selectedKey}`);
+    const fb = document.getElementById(`fb-${qNum}`);
+
+    if (isCorrect) {
+      chosenBtn.classList.add('correct');
+      fb.className = 'feedback-box show correct-msg';
+      fb.innerHTML = `
+        <div class="feedback-header">&#x2714; Correct! (Answer: ${q.answer})</div>
+        <div>${q.explanation}</div>
+      `;
+    } else {
+      chosenBtn.classList.add('incorrect');
+      fb.className = 'feedback-box show incorrect-msg';
+      fb.innerHTML = `
+        <div class="feedback-header">&#x2718; Not quite!</div>
+        <div>You selected <strong>${selectedKey}</strong>. Review the concept or tap another option to try again!</div>
+      `;
+    }
+  }
+
+  updateDashboard();
+}
+
+function submitExam() {
+  appState.examSubmitted = true;
+  stopTimer();
+  document.getElementById('submit-exam-btn').classList.remove('show');
+  renderQuiz();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderExamResultsBanner() {
+  const banner = document.getElementById('exam-results-banner');
+  let totalCorrect = 0;
+  for (let i = 1; i <= 120; i++) {
+    if (appState.answers[i].correct) totalCorrect++;
+  }
+  const pct = Math.round((totalCorrect / 120) * 100);
+
+  let secCardsHTML = '';
+  sectionMeta.forEach(sec => {
+    const secQs = examBank.filter(q => q.sec === sec.id);
+    let secCorrect = 0;
+    secQs.forEach(q => {
+      if (appState.answers[q.num].correct) secCorrect++;
+    });
+    const secPct = Math.round((secCorrect / secQs.length) * 100);
+    secCardsHTML += `
+      <div class="topic-stat-card">
+        <strong>${sec.title.split(':')[0].trim()}</strong>
+        <span>${secCorrect} / ${secQs.length} (${secPct}%)</span>
+      </div>
+    `;
+  });
+
+  banner.className = 'exam-results-banner show';
+  banner.innerHTML = `
+    <div class="exam-results-header">
+      <div>
+        <div style="font-size:0.8rem; font-weight:700; text-transform:uppercase; color:var(--gray-600);">Official Exam 2 Simulation Result</div>
+        <div class="exam-grade-big">Final Score: ${totalCorrect} / 100 (${pct}%)</div>
+      </div>
+      <div>
+        <button type="button" class="btn-action" onclick="resetExam()">&#x21bb; Retake Exam</button>
+      </div>
+    </div>
+    <div class="topic-breakdown-grid">
+      ${secCardsHTML}
+    </div>
+  `;
+}
+
+function updateDashboard() {
+  let answered = 0;
+  let correct = 0;
+  const total = 120;
+
+  for (let i = 1; i <= total; i++) {
+    if (appState.answers[i].answered) answered++;
+    if (appState.answers[i].correct) correct++;
+  }
+
+  const pct = Math.round((correct / total) * 100);
+
+  if (appState.mode === 'exam' && !appState.examSubmitted) {
+    document.getElementById('score-display').textContent = `Hidden`;
+    document.getElementById('percent-display').textContent = `Exam in Progress`;
+  } else {
+    document.getElementById('score-display').textContent = `${correct} / ${total}`;
+    document.getElementById('percent-display').textContent = `${pct}%`;
+  }
+
+  document.getElementById('answered-display').textContent = `${answered} / ${total}`;
+  document.getElementById('progress-fill').style.width = `${Math.round((answered / total) * 100)}%`;
+}
+
+function filterSection(secId, tabEl) {
+  appState.currentFilter = secId;
+  const tabs = document.querySelectorAll('.nav-tab');
+  tabs.forEach(t => t.classList.remove('active'));
+  if (tabEl) tabEl.classList.add('active');
+
+  const blocks = document.querySelectorAll('.section-block');
+  blocks.forEach(block => {
+    if (secId === 'all' || block.dataset.section === secId) {
+      block.style.display = 'block';
+    } else {
+      block.style.display = 'none';
+    }
+  });
+}
+
+function resetExam() {
+  initQuizState();
+  appState.studyMode = false;
+  updateStudyModeButton();
+
+  if (appState.mode === 'exam') {
+    document.getElementById('submit-exam-btn').classList.add('show');
+    resetTimer(appState.timerDurationMin);
+    startTimer();
+  }
+
+  renderQuiz();
+}
+
+function updateStudyModeButton() {
+  const btn = document.getElementById('study-mode-btn');
+  if (!btn) return;
+  if (appState.studyMode) {
+    btn.innerHTML = '&#x274C; Exit Study Mode';
+    btn.style.background = 'var(--primary)';
+    btn.style.color = 'white';
+  } else {
+    btn.innerHTML = '&#x1F4D6; Study Mode';
+    btn.style.background = 'white';
+    btn.style.color = 'var(--gray-700)';
+  }
+}
+
+function toggleStudyMode() {
+  if (appState.mode === 'exam') return;
+  appState.studyMode = !appState.studyMode;
+  updateStudyModeButton();
+
+  if (appState.studyMode) {
+    examBank.forEach(q => {
+      appState.answers[q.num] = { answered: true, correct: true, selected: q.answer };
+    });
+    renderQuiz();
+  } else {
+    resetExam();
+  }
+}
+
+function toggleCheatSheet(show) {
+  const modal = document.getElementById('cheatsheet-modal');
+  if (modal) modal.classList.toggle('show', show);
+}
+
+window.onload = () => {
+  renderQuiz();
+};
+</script>
+</body>
+</html>
